@@ -78,7 +78,7 @@ npx serve
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under CC-BY-NC-ND 4.0 - see [COPYRIGHT.txt](COPYRIGHT.txt) for details.
 
 ## 🤝 Contributing
 
