@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HematologyConnect | Advanced Hematology Care in North China</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A1628;
+            --accent: #FF6B4A;
+            --accent-light: #FF8A6D;
+            --teal: #0D9488;
+            --cream: #FDF8F3;
+            --text: #0A1628;
+            --text-muted: #64748B;
+            --border: rgba(10, 22, 40, 0.1);
+            --white: #FFFFFF;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--primary);
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.2s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--white) !important;
+            padding: 12px 24px;
+            transition: all 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--cream);
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 160px 0 100px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 74, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--primary);
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 107, 74, 0.2);
+            z-index: -1;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+            max-width: 580px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(255, 107, 74, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 74, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-card {
+            background: var(--white);
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(10, 22, 40, 0.12);
+            position: relative;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent), var(--teal));
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 24px;
+            background: var(--cream);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            text-align: left;
+            margin-bottom: 60px;
+            max-width: 800px;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 24px;
+        }
+
+        .section-description {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Why Section */
+        .why-section {
+            background: var(--primary);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 74, 0.05));
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .why-content h2 {
+            color: var(--white);
+            margin-bottom: 32px;
+        }
+
+        .why-content p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .why-features {
+            display: grid;
+            gap: 24px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent);
+            transition: all 0.2s;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .feature-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .feature-text p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+
+        /* Services Section */
+        .services-section {
+            background: var(--white);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            padding: 48px 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(10, 22, 40, 0.1);
+        }
+
+        .service-icon {
+            width: 72px;
+            height: 72px;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 32px;
+            border-radius: 0;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 12px 0;
+            color: var(--text-muted);
+            position: relative;
+            padding-left: 28px;
+            border-bottom: 1px solid rgba(10, 22, 40, 0.05);
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .services-notice {
+            background: var(--cream);
+            border-left: 4px solid var(--accent);
+            padding: 24px 32px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .services-notice-icon {
+            font-size: 2rem;
+        }
+
+        .services-notice-text {
+            flex: 1;
+        }
+
+        .services-notice-text strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .services-notice-text p {
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* How It Works */
+        .how-section {
+            background: var(--cream);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent), var(--teal));
+        }
+
+        .timeline-step {
+            position: relative;
+            padding-left: 100px;
+            margin-bottom: 60px;
+        }
+
+        .timeline-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-marker {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            background: var(--white);
+            border: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            box-shadow: 0 8px 24px rgba(255, 107, 74, 0.2);
+        }
+
+        .step-content {
+            background: var(--white);
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(10, 22, 40, 0.08);
+            border-left: 4px solid var(--accent);
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--white);
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 16px;
+            max-width: 900px;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border: 2px solid var(--border);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255, 107, 74, 0.3);
+        }
+
+        .faq-question {
+            padding: 28px 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            user-select: none;
+            gap: 20px;
+        }
+
+        .faq-question-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: var(--cream);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-question-icon {
+            background: var(--accent);
+            color: var(--white);
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--cream);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 28px 40px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* Disclaimer */
+        .disclaimer-section {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .disclaimer-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 48px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .disclaimer-box h3 {
+            color: var(--accent);
+            margin-bottom: 32px;
+            font-size: 1.75rem;
+        }
+
+        .disclaimer-box p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--white);
+            padding: 140px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>') center/100px;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 32px;
+            color: var(--white);
+        }
+
+        .cta-content p {
+            font-size: 1.25rem;
+            margin-bottom: 48px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--accent);
+            padding: 20px 56px;
+            font-size: 1.125rem;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            opacity: 0.7;
+            margin-top: 24px;
+            max-width: 320px;
+            line-height: 1.8;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            margin-bottom: 24px;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-section a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-bottom a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-step {
+                padding-left: 60px;
+            }
+
+            .step-marker {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .container {
+                padding: 0 24px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 80px 0;
+            }
+
+            .hero {
+                padding: 140px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 16px 32px;
+                font-size: 0.95rem;
+            }
+
+            .service-card {
+                padding: 32px 24px;
+            }
+
+            .step-content {
+                padding: 28px 24px;
+            }
+
+            .disclaimer-box {
+                padding: 32px 24px;
+            }
+
+            .faq-question {
+                padding: 20px 24px;
+                font-size: 1rem;
+            }
+
+            .faq-answer-content {
+                padding: 20px 24px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">Hematology<span>Connect</span></div>
+            <nav>
+                <a href="#why">Why North China</a>
+                <a href="#services">Services</a>
+                <a href="#how">How It Works</a>
+                <a href="#faq">FAQ</a>
+                <a href="#contact" class="nav-cta">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content fade-in">
+                    <span class="hero-badge">North China's Premier Hematology Center</span>
+                    <h1>Advanced Blood Cancer Care in <span>North China</span></h1>
+                    <p class="hero-description">Connecting international patients with China's leading national hematology center—expert treatment for leukemia, lymphoma, multiple myeloma, and complex blood disorders.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Start Your Free Case Review</a>
+                        <a href="#how" class="btn btn-secondary">See How It Works</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-card">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">20+</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">10K+</div>
+                                <div class="stat-label">Patients Treated</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">95%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">50%</div>
+                                <div class="stat-label">Cost Savings</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why North China -->
+    <section id="why" class="why-section">
+        <div class="container">
+            <div class="why-grid">
+                <div class="why-content">
+                    <span class="section-label">Why North China</span>
+                    <h2>World-Class Hematology Expertise</h2>
+                    <p>North China is home to one of the country's top national hematology centers, recognized internationally for expertise in blood cancers and complex blood disorders.</p>
+                    <p>The hospital we work with is a national key department in hematology, with extensive experience in stem cell transplantation, CAR‑T therapy, and comprehensive hematology care—backed by decades of clinical research and innovation.</p>
+                </div>
+                <div class="why-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏥</div>
+                        <div class="feature-text">
+                            <h4>National Key Department</h4>
+                            <p>Government-recognized center of excellence with high case volume and advanced facilities</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔬</div>
+                        <div class="feature-text">
+                            <h4>Comprehensive Expertise</h4>
+                            <p>Leukemia, lymphoma, multiple myeloma, MDS, and other complex blood diseases</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💉</div>
+                        <div class="feature-text">
+                            <h4>Advanced Treatments</h4>
+                            <p>Stem cell transplantation, CAR‑T therapy, and cutting-edge protocols (eligibility-based)</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-text">
+                            <h4>Accessible Excellence</h4>
+                            <p>More affordable than many Western countries, with significantly shorter waiting times</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Our Services</span>
+                <h2 class="section-title">Comprehensive Coordination & Support</h2>
+                <p class="section-description">We bridge the gap between international patients and China's leading hematology specialists—handling logistics so you can focus on treatment.</p>
+            </div>
+
+            <div class="services-notice">
+                <div class="services-notice-icon">⚠️</div>
+                <div class="services-notice-text">
+                    <strong>Important: Non-Medical Coordination Service</strong>
+                    <p>We are not a hospital and do not provide medical advice. We offer coordination and support services to help you navigate treatment in China.</p>
+                </div>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Remote Case Submission</h3>
+                    <ul class="service-list">
+                        <li>Organize and translate your medical records</li>
+                        <li>Submit your case to a leading hematology team</li>
+                        <li>Receive preliminary opinion on treatment options</li>
+                        <li>Coordinate with hospital specialists</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✈️</div>
+                    <h3>Visit & Treatment Planning</h3>
+                    <ul class="service-list">
+                        <li>Assist with appointment booking & scheduling</li>
+                        <li>Provide visa preparation information</li>
+                        <li>Share travel logistics guidance</li>
+                        <li>Coordinate with international department</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>On-Site & Follow-Up Support</h3>
+                    <ul class="service-list">
+                        <li>Accompany you to key consultations</li>
+                        <li>Provide professional interpretation services</li>
+                        <li>Help with registration & payments</li>
+                        <li>Translate documents & assist with follow-ups</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="how-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">The Process</span>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-description">A clear, straightforward path from initial inquiry to treatment completion.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="step-marker">1</div>
+                    <div class="step-content">
+                        <h3>Contact & Basic Information</h3>
+                        <p>Fill out our online form and briefly describe your diagnosis and needs. We'll respond within 24 hours with next steps.</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-marker">2</div>
+                    <div class="step-content">
+                        <h3>Medical Records Submission</h3>
+                        <p>Send us your existing medical reports (preferably in English). We organize and translate key information into Chinese for the hospital's review.</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-marker">3</div>
+                    <div class="step-content">
+                        <h3>Hospital Review & Preliminary Opinion</h3>
+                        <p>We submit your case to the hematology specialist team. They review your case and indicate whether they can accept you and outline potential next steps.</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-marker">4</div>
+                    <div class="step-content">
+                        <h3>Decide & Plan Your Visit</h3>
+                        <p>Based on the hospital's feedback, you decide whether to travel to China. We assist with appointment scheduling and basic visit planning.</p>
+                    </div>
+                </div>
+                <div class="timeline-step">
+                    <div class="step-marker">5</div>
+                    <div class="step-content">
+                        <h3>Arrival, Treatment & Follow‑Up</h3>
+                        <p>We support you during hospital visits with interpretation and coordination. After discharge, we help translate key documents and arrange follow‑up consultations if offered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">Common Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are you a hospital?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            No. We are not a hospital or clinic. We are a coordination service that helps international patients connect with a leading hematology center in North China. All medical treatment is provided directly by the hospital.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you provide medical advice or decide on treatment plans?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            No. All medical decisions, diagnoses, and treatment plans are made only by licensed physicians at the partner hospital. We do not provide medical advice—we facilitate communication and logistics.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can you guarantee a cure or a specific treatment?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            No. Whether you are eligible for a specific treatment depends entirely on the hospital's medical assessment of your condition. No outcome or treatment can be guaranteed. We advocate for you, but medical decisions rest with the hospital.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What costs should I expect?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our service fees cover coordination and support only. All hospital fees (consultations, tests, treatments, hospitalization, medications) are charged directly by the hospital. We can share approximate estimates based on hospital information, but actual costs depend on your condition and final treatment plan.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can you help with visas, flights and accommodation?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We provide general information for visa applications and local travel. The hospital may issue an invitation letter if applicable. However, you are responsible for applying for your visa, booking flights, and arranging accommodation.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Who should consider treatment in China?
+                        <span class="faq-question-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Patients with blood cancers or serious blood disorders who are seeking advanced treatment options, shorter waiting times, or a second opinion from experienced hematology specialists. Ideal for those open to international travel for healthcare.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer-section">
+        <div class="container">
+            <div class="disclaimer-box">
+                <h3>Important Disclaimer</h3>
+                <p>We are not a hospital, clinic, or medical institution and do not provide medical advice, diagnosis, or treatment. We are a coordination service only.</p>
+                <p>All medical decisions, including whether to accept a case, which treatments to use, and how to estimate risks and outcomes, are made solely by licensed physicians at the partner hospital(s).</p>
+                <p>Any information we provide about potential treatment options, durations, or costs is for reference only and may change based on your actual condition and the doctor's judgment.</p>
+                <p>We do not guarantee any specific medical result, cure, or improvement. Outcomes vary by individual case.</p>
+                <p>We do not provide immigration or legal services. You are responsible for your own visa applications, travel arrangements, and insurance coverage.</p>
+                <p>By using our services, you acknowledge and accept these terms.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Take the Next Step?</h2>
+                <p>If you or your family member has been diagnosed with a blood disease and you're considering treatment in China, start with a free basic case review. We'll review your information and provide clear next steps.</p>
+                <button class="btn btn-white" onclick="openForm()">Submit Your Case for Free Review</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">Hematology<span>Connect</span></div>
+                    <p>Bridging international patients with world-class hematology care in North China. Your journey to healing starts here.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#why">Why North China</a>
+                    <a href="#services">Our Services</a>
+                    <a href="#how">How It Works</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Patient Guide</a>
+                    <a href="#">Travel Information</a>
+                    <a href="#">Hospital Overview</a>
+                    <a href="#">Success Stories</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="mailto:contact@hematologyconnect.com">contact@hematologyconnect.com</a>
+                    <a href="#contact">Start Case Review</a>
+                    <a href="#">WeChat</a>
+                    <a href="#">WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 HematologyConnect. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Form Handler
+        function openForm() {
+            const formUrl = 'https://forms.example.com/hematology-case-review';
+            window.open(formUrl, '_blank');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(10, 22, 40, 0.08)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
