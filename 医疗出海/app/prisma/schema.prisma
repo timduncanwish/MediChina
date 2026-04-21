@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  phone         String?
+  nationality   String?
+  languagePref  String    @default("en")
+  role          String    @default("customer")
+  orders        Order[]
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Product {
+  id                      String   @id @default(cuid())
+  title                   String
+  handle                  String   @unique
+  description             String
+  price                   Float
+  compareAtPrice          Float?
+  category                String   // "comprehensive" or "focused"
+  durationEstimate        String
+  partnerHospital         String
+  preparationInstructions String?
+  includes                String[]
+  images                  String[]
+  calendlyEventType       String?
+  reviewsCount            Int      @default(0)
+  averageRating           Float    @default(0)
+  isActive                Boolean  @default(true)
+  sortOrder               Int      @default(0)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  orderItems              OrderItem[]
+  reviews                 Review[]
+}
+
+model Order {
+  id                  String      @id @default(cuid())
+  orderNumber         String      @unique
+  customerEmail       String
+  customerFirstName   String
+  customerLastName    String
+  customerPhone       String?
+  status              String      @default("pending") // pending, confirmed, completed, cancelled
+  totalAmount         Float
+  currency            String      @default("USD")
+  appointmentDate     DateTime?
+  appointmentTime     String?
+  interpreterLanguage String?
+  refundStatus        String      @default("none") // none, partial, full
+  stripeSessionId     String?
+  paypalOrderId       String?
+  userId              String?
+  user                User?       @relation(fields: [userId], references: [id])
+  items               OrderItem[]
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  productId   String
+  title       String
+  price       Float
+  quantity    Int     @default(1)
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  rating    Int
+  title     String
+  body      String
+  author    String
+  verified  Boolean  @default(false)
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model ContactInquiry {
+  id             String   @id @default(cuid())
+  fullName       String
+  email          String
+  phone          String?
+  nationality    String?
+  serviceInterest String?
+  preferredDateRange String?
+  notes          String?
+  status         String   @default("new") // new, contacted, resolved
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String
+  excerpt     String
+  content     String   @db.Text
+  language    String   @default("en") // en, kr, ar, mn, ru
+  author      String   @default("Himedi Team")
+  image       String?
+  tags        String[]
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([slug, language])
+}

@@ -1,0 +1,11 @@
+# Ignore everything at root
+/*
+
+# Keep these
+!.gitignore
+!/医疗出海/
+
+# App build artifacts
+医疗出海/app/node_modules/
+医疗出海/app/.next/
+医疗出海/app/.env*
