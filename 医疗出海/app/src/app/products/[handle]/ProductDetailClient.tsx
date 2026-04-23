@@ -61,25 +61,33 @@ export function ProductDetailClient({ product, reviews }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left: Image */}
-          <div className="bg-gradient-to-br from-primary-light to-blue-50 rounded-2xl aspect-square flex items-center justify-center">
-            <div className="text-center">
-              <svg
-                className="w-24 h-24 text-primary/20 mx-auto mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-              <p className="text-primary/30 text-sm font-medium">
-                {product.title}
-              </p>
-            </div>
+          <div className="bg-gradient-to-br from-primary-light to-blue-50 rounded-2xl aspect-square flex items-center justify-center overflow-hidden">
+            {product.images[0] ? (
+              <img
+                src={product.images[0]}
+                alt={product.title}
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <div className="text-center">
+                <svg
+                  className="w-24 h-24 text-primary/20 mx-auto mb-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                <p className="text-primary/30 text-sm font-medium">
+                  {product.title}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Right: Info */}

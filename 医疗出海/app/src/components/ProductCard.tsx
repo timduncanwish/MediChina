@@ -8,23 +8,31 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-shadow group">
-      {/* Image placeholder */}
+      {/* Image */}
       <div className="aspect-[4/3] bg-gradient-to-br from-primary-light to-blue-50 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <svg
-            className="w-16 h-16 text-primary/30"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
-        </div>
+        {product.images[0] ? (
+          <img
+            src={product.images[0]}
+            alt={product.title}
+            className="w-full h-full object-contain"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <svg
+              className="w-16 h-16 text-primary/30"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </div>
+        )}
         <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
           <span className="text-xs font-medium text-primary capitalize">
             {product.category}
