@@ -55,7 +55,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             </span>
             <time className="text-sm text-muted">{post.createdAt}</time>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
             {post.title}
           </h1>
           <p className="text-lg text-muted">{post.excerpt}</p>
@@ -72,7 +72,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {post.content.split("\n\n").map((paragraph, i) => {
             if (paragraph.startsWith("## ")) {
               return (
-                <h2 key={i} className="text-2xl font-bold text-foreground mt-8 mb-4 font-[family-name:var(--font-heading)]">
+                <h2 key={i} className="text-2xl font-bold text-foreground mt-8 mb-4 font-heading">
                   {paragraph.replace("## ", "")}
                 </h2>
               );
@@ -108,7 +108,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {relatedPosts.length > 0 && (
         <section className="bg-muted-light py-12">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+            <h2 className="text-2xl font-bold text-foreground mb-6 font-heading">
               Related Articles
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -118,7 +118,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   href={`/blogs/${lang}/${rPost.slug}`}
                   className="bg-white rounded-lg p-4 border border-border hover:shadow-md transition-shadow"
                 >
-                  <h3 className="font-semibold text-foreground mb-2 font-[family-name:var(--font-heading)] line-clamp-2">
+                  <h3 className="font-semibold text-foreground mb-2 font-heading line-clamp-2">
                     {rPost.title}
                   </h3>
                   <p className="text-sm text-muted line-clamp-2">{rPost.excerpt}</p>

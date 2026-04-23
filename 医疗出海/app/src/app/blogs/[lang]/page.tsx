@@ -33,7 +33,7 @@ export default async function BlogListPage({ params }: PageProps) {
       {/* Header */}
       <section className="bg-gradient-to-r from-primary to-blue-700 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 font-heading">
             Himedi Blog
           </h1>
           <p className="text-blue-200 max-w-2xl">
@@ -92,7 +92,7 @@ export default async function BlogListPage({ params }: PageProps) {
                     </span>
                     <span className="text-xs text-muted">{post.createdAt}</span>
                   </div>
-                  <h2 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors font-[family-name:var(--font-heading)] line-clamp-2">
+                  <h2 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors font-heading line-clamp-2">
                     {post.title}
                   </h2>
                   <p className="text-sm text-muted line-clamp-3">

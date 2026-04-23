@@ -9,7 +9,7 @@ export default function CartPage() {
   return (
     <div className="bg-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-[family-name:var(--font-heading)]">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-heading">
           Shopping Cart
         </h1>
 
@@ -28,7 +28,7 @@ export default function CartPage() {
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
               />
             </svg>
-            <h2 className="text-xl font-semibold text-foreground mb-2 font-[family-name:var(--font-heading)]">
+            <h2 className="text-xl font-semibold text-foreground mb-2 font-heading">
               Your cart is empty
             </h2>
             <p className="text-muted mb-6">
@@ -36,7 +36,7 @@ export default function CartPage() {
             </p>
             <Link
               href="/collections/all"
-              className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+              className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
             >
               Browse Packages
             </Link>
@@ -71,7 +71,7 @@ export default function CartPage() {
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/products/${item.product.handle}`}
-                      className="font-semibold text-foreground hover:text-primary transition-colors font-[family-name:var(--font-heading)]"
+                      className="font-semibold text-foreground hover:text-primary transition-colors font-heading"
                     >
                       {item.product.title}
                     </Link>
@@ -135,7 +135,7 @@ export default function CartPage() {
             {/* Order summary */}
             <div>
               <div className="bg-muted-light rounded-xl p-6 sticky top-24">
-                <h2 className="text-lg font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+                <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
                   Order Summary
                 </h2>
                 <div className="space-y-3 mb-6">
@@ -165,7 +165,7 @@ export default function CartPage() {
                 </div>
                 <Link
                   href="/checkout"
-                  className="block w-full bg-primary text-white text-center font-semibold py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+                  className="block w-full bg-primary text-white text-center font-semibold py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-heading"
                 >
                   Proceed to Checkout
                 </Link>

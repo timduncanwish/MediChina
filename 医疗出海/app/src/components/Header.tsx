@@ -26,11 +26,11 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm font-[family-name:var(--font-heading)]">
+              <span className="text-white font-bold text-sm font-heading">
                 H
               </span>
             </div>
-            <span className="text-xl font-bold text-foreground font-[family-name:var(--font-heading)]">
+            <span className="text-xl font-bold text-foreground font-heading">
               Himedi
             </span>
           </Link>
@@ -41,7 +41,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted hover:text-foreground transition-colors font-[family-name:var(--font-heading)]"
+                className="text-sm font-medium text-muted hover:text-foreground transition-colors font-heading"
               >
                 {link.label}
               </Link>
@@ -147,7 +147,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="block text-base font-medium text-muted hover:text-foreground transition-colors py-2 font-[family-name:var(--font-heading)]"
+                className="block text-base font-medium text-muted hover:text-foreground transition-colors py-2 font-heading"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}

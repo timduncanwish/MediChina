@@ -17,7 +17,7 @@ export default function CollectionsPage() {
       {/* Page header */}
       <div className="bg-gradient-to-r from-primary to-blue-700 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-heading">
             Health Screening Packages
           </h1>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto">
@@ -32,7 +32,7 @@ export default function CollectionsPage() {
         {/* Comprehensive Screens */}
         <section className="mb-16">
           <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-[family-name:var(--font-heading)]">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-heading">
               Comprehensive Screens
             </h2>
             <p className="text-muted mt-2">
@@ -50,7 +50,7 @@ export default function CollectionsPage() {
         {/* Focused Diagnostics */}
         <section>
           <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-[family-name:var(--font-heading)]">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground font-heading">
               Focused Diagnostics
             </h2>
             <p className="text-muted mt-2">

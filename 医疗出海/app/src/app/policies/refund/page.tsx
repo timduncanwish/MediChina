@@ -12,7 +12,7 @@ export default function RefundPolicyPage() {
     <div className="bg-white">
       <div className="bg-gradient-to-r from-primary to-blue-700 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl md:text-4xl font-bold font-heading">
             Refund Policy
           </h1>
         </div>
@@ -23,7 +23,7 @@ export default function RefundPolicyPage() {
             Last updated: April 20, 2026
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-heading">
             Cancellation Policy
           </h2>
           <div className="bg-muted-light rounded-xl p-6 mb-6">
@@ -58,7 +58,7 @@ export default function RefundPolicyPage() {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-heading">
             Rescheduling
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -68,7 +68,7 @@ export default function RefundPolicyPage() {
             form.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-heading">
             How to Request a Refund
           </h2>
           <ol className="list-decimal list-inside space-y-2 text-muted">
@@ -78,7 +78,7 @@ export default function RefundPolicyPage() {
             <li>Refund will be processed within 5-10 business days to the original payment method</li>
           </ol>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 mt-8 font-heading">
             Exceptions
           </h2>
           <p className="text-muted leading-relaxed mb-4">

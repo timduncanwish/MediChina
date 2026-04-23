@@ -76,10 +76,10 @@ export default function SignupPage() {
     <div className="bg-white min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-primary font-[family-name:var(--font-heading)]">
+          <Link href="/" className="text-2xl font-bold text-primary font-heading">
             Himedi
           </Link>
-          <h1 className="text-2xl font-bold text-foreground mt-4 mb-2 font-[family-name:var(--font-heading)]">
+          <h1 className="text-2xl font-bold text-foreground mt-4 mb-2 font-heading">
             Create Account
           </h1>
           <p className="text-muted text-sm">Join Himedi to book your health screening</p>
@@ -167,7 +167,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)] disabled:opacity-50"
+            className="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50"
           >
             {loading ? "Creating account..." : "Create Account"}
           </button>

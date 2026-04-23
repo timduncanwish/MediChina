@@ -25,7 +25,7 @@ export default function GlobalError({
             />
           </svg>
         </div>
-        <h2 className="text-2xl font-bold text-foreground mb-2 font-[family-name:var(--font-heading)]">
+        <h2 className="text-2xl font-bold text-foreground mb-2 font-heading">
           Something went wrong
         </h2>
         <p className="text-muted mb-6">
@@ -33,7 +33,7 @@ export default function GlobalError({
         </p>
         <button
           onClick={reset}
-          className="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+          className="bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
         >
           Try again
         </button>

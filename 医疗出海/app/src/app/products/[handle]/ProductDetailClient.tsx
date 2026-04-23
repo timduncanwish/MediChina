@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Product, Review } from "@/types";
 import { useCart } from "@/components/CartProvider";
 import { StarRating } from "@/components/StarRating";
@@ -15,6 +15,21 @@ export function ProductDetailClient({ product, reviews }: Props) {
   const { addItem } = useCart();
   const [addedToCart, setAddedToCart] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "reviews" | "schedule">("details");
+
+  const calendlyUrl = product.calendlyEventType || process.env.NEXT_PUBLIC_CALENDLY_LINK || "";
+
+  // Load Calendly script when schedule tab is active
+  useEffect(() => {
+    if (activeTab === "schedule" && calendlyUrl) {
+      const existing = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://assets.calendly.com/assets/external/widget.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, [activeTab, calendlyUrl]);
 
   const handleAddToCart = () => {
     addItem(product);
@@ -75,7 +90,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
                   ? "Comprehensive Screen"
                   : "Focused Diagnostic"}
               </span>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground font-[family-name:var(--font-heading)]">
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground font-heading">
                 {product.title}
               </h1>
             </div>
@@ -106,14 +121,14 @@ export function ProductDetailClient({ product, reviews }: Props) {
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-primary text-white font-semibold py-3.5 px-6 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)] disabled:opacity-50"
+                className="flex-1 bg-primary text-white font-semibold py-3.5 px-6 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50"
                 disabled={addedToCart}
               >
                 {addedToCart ? "Added to Cart!" : "Add to Cart"}
               </button>
               <Link
                 href="/cart"
-                className="flex-1 border-2 border-primary text-primary font-semibold py-3.5 px-6 rounded-lg hover:bg-primary-light transition-colors text-center font-[family-name:var(--font-heading)]"
+                className="flex-1 border-2 border-primary text-primary font-semibold py-3.5 px-6 rounded-lg hover:bg-primary-light transition-colors text-center font-heading"
               >
                 Book Now
               </Link>
@@ -208,7 +223,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
             ).map((tab) => (
               <button
                 key={tab.key}
-                className={`py-4 text-sm font-medium border-b-2 transition-colors font-[family-name:var(--font-heading)] ${
+                className={`py-4 text-sm font-medium border-b-2 transition-colors font-heading ${
                   activeTab === tab.key
                     ? "border-primary text-primary"
                     : "border-transparent text-muted hover:text-foreground"
@@ -225,7 +240,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
           {/* Details Tab */}
           {activeTab === "details" && (
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+              <h2 className="text-2xl font-bold text-foreground mb-6 font-heading">
                 What&apos;s Included
               </h2>
               <ul className="space-y-3 mb-8">
@@ -251,7 +266,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
 
               {product.preparationInstructions && (
                 <>
-                  <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+                  <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
                     Preparation Instructions
                   </h2>
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
@@ -350,12 +365,16 @@ export function ProductDetailClient({ product, reviews }: Props) {
           {/* Schedule Tab - Calendly embed */}
           {activeTab === "schedule" && (
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+              <h2 className="text-2xl font-bold text-foreground mb-6 font-heading">
                 Schedule Your Appointment
               </h2>
               <div className="bg-muted-light border border-border rounded-xl p-6">
-                {product.calendlyEventType ? (
-                  <div className="calendly-inline-widget" data-url={product.calendlyEventType} style={{ minWidth: "320px", height: "630px" }} />
+                {calendlyUrl ? (
+                  <div
+                    className="calendly-inline-widget"
+                    data-url={calendlyUrl}
+                    style={{ minWidth: "320px", height: "630px" }}
+                  />
                 ) : (
                   <div className="text-center py-12">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -373,7 +392,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
                         />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2 font-[family-name:var(--font-heading)]">
+                    <h3 className="text-lg font-semibold text-foreground mb-2 font-heading">
                       Book After Purchase
                     </h3>
                     <p className="text-muted text-sm max-w-md mx-auto mb-6">

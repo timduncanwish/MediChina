@@ -36,10 +36,10 @@ export default function LoginPage() {
     <div className="bg-white min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-primary font-[family-name:var(--font-heading)]">
+          <Link href="/" className="text-2xl font-bold text-primary font-heading">
             Himedi
           </Link>
-          <h1 className="text-2xl font-bold text-foreground mt-4 mb-2 font-[family-name:var(--font-heading)]">
+          <h1 className="text-2xl font-bold text-foreground mt-4 mb-2 font-heading">
             Welcome Back
           </h1>
           <p className="text-muted text-sm">Sign in to manage your bookings</p>
@@ -78,7 +78,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)] disabled:opacity-50"
+            className="w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Sign In"}
           </button>

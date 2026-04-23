@@ -27,7 +27,7 @@ export default function BookingConfirmationPage() {
           </svg>
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
           Booking Confirmed!
         </h1>
 
@@ -41,7 +41,7 @@ export default function BookingConfirmationPage() {
 
         {/* What happens next */}
         <div className="bg-muted-light rounded-xl p-8 text-left mb-8">
-          <h2 className="text-lg font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
             What Happens Next?
           </h2>
           <div className="space-y-4">
@@ -72,11 +72,11 @@ export default function BookingConfirmationPage() {
               },
             ].map((item) => (
               <div key={item.step} className="flex gap-4">
-                <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0 font-[family-name:var(--font-heading)]">
+                <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0 font-heading">
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">
+                  <h3 className="font-semibold text-foreground font-heading">
                     {item.title}
                   </h3>
                   <p className="text-sm text-muted">{item.description}</p>
@@ -88,7 +88,7 @@ export default function BookingConfirmationPage() {
 
         {/* Important info */}
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-left mb-8">
-          <h3 className="font-semibold text-foreground mb-2 font-[family-name:var(--font-heading)]">
+          <h3 className="font-semibold text-foreground mb-2 font-heading">
             Important Information
           </h3>
           <ul className="text-sm text-muted space-y-1">
@@ -102,13 +102,13 @@ export default function BookingConfirmationPage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="inline-flex items-center justify-center bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+            className="inline-flex items-center justify-center bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
           >
             Return Home
           </Link>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center border-2 border-primary text-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary-light transition-colors font-[family-name:var(--font-heading)]"
+            className="inline-flex items-center justify-center border-2 border-primary text-primary font-semibold px-8 py-3 rounded-lg hover:bg-primary-light transition-colors font-heading"
           >
             Contact Support
           </Link>

@@ -17,6 +17,11 @@
   --font-body: "Nunito", sans-serif;
 }
 
+/* Utility: use heading font */
+@utility font-heading {
+  font-family: var(--font-heading);
+}
+
 body {
   background: var(--color-background);
   color: var(--color-foreground);

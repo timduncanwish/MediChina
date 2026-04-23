@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <div className="bg-white">
       <div className="bg-gradient-to-r from-primary to-blue-700 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl md:text-4xl font-bold font-heading">
             Privacy Policy
           </h1>
         </div>
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
         <div className="prose max-w-none">
           <p className="text-muted mb-6">Last updated: April 20, 2026</p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             1. Information We Collect
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
             collect usage data automatically through cookies and analytics tools.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             2. How We Use Your Information
           </h2>
           <ul className="list-disc list-inside text-muted space-y-1 mb-4">
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             <li>Comply with legal obligations</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             3. Health Data (HIPAA Notice)
           </h2>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             4. Third-Party Services
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -66,7 +66,7 @@ export default function PrivacyPage() {
             policies governing data they collect.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             5. Cookies
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
             cookie preferences through your browser settings.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             6. Data Retention
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -85,7 +85,7 @@ export default function PrivacyPage() {
             contacting us.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             7. Your Rights (GDPR / CCPA)
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
             <li>Opt out of marketing communications</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             8. Data Security
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
             over the Internet is 100% secure.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             9. Contact
           </h2>
           <p className="text-muted leading-relaxed">

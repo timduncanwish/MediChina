@@ -19,7 +19,7 @@ export default function FAQPage() {
       {/* Header */}
       <section className="bg-gradient-to-r from-primary to-blue-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-heading">
             Frequently Asked Questions
           </h1>
           <p className="text-blue-100 text-lg">
@@ -34,7 +34,7 @@ export default function FAQPage() {
         <div className="space-y-12">
           {Object.entries(faqData).map(([category, questions]) => (
             <section key={category}>
-              <h2 className="text-2xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)] flex items-center gap-2">
+              <h2 className="text-2xl font-bold text-foreground mb-6 font-heading flex items-center gap-2">
                 <div className="w-2 h-8 bg-primary rounded-full" />
                 {category}
               </h2>
@@ -47,7 +47,7 @@ export default function FAQPage() {
       {/* Still have questions? */}
       <section className="py-16 bg-muted-light border-t border-border">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             Still Have Questions?
           </h2>
           <p className="text-muted mb-6">
@@ -56,7 +56,7 @@ export default function FAQPage() {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
           >
             Contact Us
           </a>

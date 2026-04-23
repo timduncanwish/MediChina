@@ -13,7 +13,7 @@ export default function AboutPage() {
       {/* Mission Hero */}
       <section className="bg-gradient-to-br from-primary to-blue-700 text-white py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 font-[family-name:var(--font-heading)]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 font-heading">
             Making World-Class Korean Healthcare Accessible to Everyone
           </h1>
           <p className="text-lg text-blue-100 max-w-2xl mx-auto">
@@ -29,7 +29,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-heading">
                 Why Korea?
               </h2>
               <p className="text-muted leading-relaxed mb-4">
@@ -54,7 +54,7 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">
+                    <h3 className="font-semibold text-foreground font-heading">
                       World-Class Technology
                     </h3>
                     <p className="text-sm text-muted">
@@ -80,7 +80,7 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">
+                    <h3 className="font-semibold text-foreground font-heading">
                       Significantly Lower Costs
                     </h3>
                     <p className="text-sm text-muted">
@@ -107,7 +107,7 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">
+                    <h3 className="font-semibold text-foreground font-heading">
                       Shorter Wait Times
                     </h3>
                     <p className="text-sm text-muted">
@@ -133,7 +133,7 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">
+                    <h3 className="font-semibold text-foreground font-heading">
                       Government Certified
                     </h3>
                     <p className="text-sm text-muted">
@@ -147,25 +147,25 @@ export default function AboutPage() {
             <div className="bg-gradient-to-br from-primary-light to-blue-50 rounded-2xl p-12 text-center">
               <div className="space-y-8">
                 <div>
-                  <p className="text-4xl font-bold text-primary font-[family-name:var(--font-heading)]">
+                  <p className="text-4xl font-bold text-primary font-heading">
                     3-5x
                   </p>
                   <p className="text-sm text-muted">Lower cost than US/UK</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-bold text-primary font-[family-name:var(--font-heading)]">
+                  <p className="text-4xl font-bold text-primary font-heading">
                     100+
                   </p>
                   <p className="text-sm text-muted">Medical interpreters</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-bold text-primary font-[family-name:var(--font-heading)]">
+                  <p className="text-4xl font-bold text-primary font-heading">
                     3-7 days
                   </p>
                   <p className="text-sm text-muted">Results delivery</p>
                 </div>
                 <div>
-                  <p className="text-4xl font-bold text-primary font-[family-name:var(--font-heading)]">
+                  <p className="text-4xl font-bold text-primary font-heading">
                     $0
                   </p>
                   <p className="text-sm text-muted">Concierge fees</p>
@@ -180,7 +180,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-20 bg-muted-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               Our Founders
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -191,11 +191,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="bg-white rounded-xl p-8 border border-border text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-primary-light to-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl font-bold text-primary font-[family-name:var(--font-heading)]">
+                <span className="text-3xl font-bold text-primary font-heading">
                   DS
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              <h3 className="text-xl font-bold text-foreground mb-1 font-heading">
                 Donkyo Seo
               </h3>
               <p className="text-primary font-medium mb-4">CEO & Co-Founder</p>
@@ -209,11 +209,11 @@ export default function AboutPage() {
             </div>
             <div className="bg-white rounded-xl p-8 border border-border text-center">
               <div className="w-24 h-24 bg-gradient-to-br from-secondary/10 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl font-bold text-secondary font-[family-name:var(--font-heading)]">
+                <span className="text-3xl font-bold text-secondary font-heading">
                   WB
                 </span>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              <h3 className="text-xl font-bold text-foreground mb-1 font-heading">
                 William Ban
               </h3>
               <p className="text-secondary font-medium mb-4">
@@ -234,7 +234,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               Our Values
             </h2>
           </div>
@@ -278,7 +278,7 @@ export default function AboutPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3 font-[family-name:var(--font-heading)]">
+                <h3 className="text-xl font-semibold text-foreground mb-3 font-heading">
                   {value.title}
                 </h3>
                 <p className="text-muted leading-relaxed">
@@ -294,7 +294,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-20 bg-muted-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               Our Partner Hospitals
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -342,7 +342,7 @@ export default function AboutPage() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+                <h3 className="text-lg font-bold text-foreground mb-1 font-heading">
                   {hospital.name}
                 </h3>
                 <p className="text-xs text-primary font-medium mb-3">
@@ -360,7 +360,7 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-16 md:py-24 bg-primary text-white text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-[family-name:var(--font-heading)]">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
             Ready to Start Your Health Journey?
           </h2>
           <p className="text-blue-100 text-lg mb-8">
@@ -370,13 +370,13 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/collections/all"
-              className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors font-[family-name:var(--font-heading)]"
+              className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors font-heading"
             >
               Browse Packages
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors font-[family-name:var(--font-heading)]"
+              className="inline-flex items-center justify-center border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors font-heading"
             >
               Contact Us
             </Link>

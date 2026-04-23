@@ -54,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
 
-        <h3 className="font-semibold text-foreground text-lg mb-1 font-[family-name:var(--font-heading)] group-hover:text-primary transition-colors">
+        <h3 className="font-semibold text-foreground text-lg mb-1 font-heading group-hover:text-primary transition-colors">
           {product.title}
         </h3>
 

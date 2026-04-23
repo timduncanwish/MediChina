@@ -14,11 +14,28 @@ export default function ContactPage() {
     notes: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would submit to the API
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Something went wrong");
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to submit");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -40,7 +57,7 @@ export default function ContactPage() {
               />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl font-bold text-foreground mb-4 font-heading">
             Inquiry Received!
           </h1>
           <p className="text-muted text-lg mb-8">
@@ -49,7 +66,7 @@ export default function ContactPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
           >
             Return Home
           </Link>
@@ -63,7 +80,7 @@ export default function ContactPage() {
       {/* Header */}
       <section className="bg-gradient-to-r from-primary to-blue-700 text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-heading">
             Get in Touch
           </h1>
           <p className="text-blue-100 text-lg max-w-2xl mx-auto">
@@ -75,6 +92,11 @@ export default function ContactPage() {
 
       {/* Contact Form */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="sm:col-span-2">
@@ -226,9 +248,10 @@ export default function ContactPage() {
 
           <button
             type="submit"
-            className="w-full sm:w-auto bg-primary text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+            disabled={isSubmitting}
+            className="w-full sm:w-auto bg-primary text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Inquiry
+            {isSubmitting ? "Submitting..." : "Submit Inquiry"}
           </button>
 
           <p className="text-xs text-muted">
@@ -261,7 +284,7 @@ export default function ContactPage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              <h3 className="font-semibold text-foreground mb-1 font-heading">
                 Email
               </h3>
               <p className="text-sm text-muted">hello@himedi.com</p>
@@ -282,7 +305,7 @@ export default function ContactPage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              <h3 className="font-semibold text-foreground mb-1 font-heading">
                 Response Time
               </h3>
               <p className="text-sm text-muted">Within 24-48 hours</p>
@@ -308,7 +331,7 @@ export default function ContactPage() {
                   />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-1 font-[family-name:var(--font-heading)]">
+              <h3 className="font-semibold text-foreground mb-1 font-heading">
                 Location
               </h3>
               <p className="text-sm text-muted">Seoul, South Korea</p>

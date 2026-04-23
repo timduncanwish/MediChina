@@ -21,7 +21,7 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-br from-primary via-blue-700 to-blue-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-[family-name:var(--font-heading)]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 font-heading">
               World-Class Korean Health Screenings, Stress-Free
             </h1>
             <p className="text-lg md:text-xl text-blue-100 mb-4">
@@ -34,7 +34,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/collections/all"
-                className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-base font-[family-name:var(--font-heading)]"
+                className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-base font-heading"
               >
                 Explore Packages
                 <svg
@@ -53,7 +53,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors text-base font-[family-name:var(--font-heading)]"
+                className="inline-flex items-center justify-center border-2 border-white/30 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-white/10 transition-colors text-base font-heading"
               >
                 Learn More
               </Link>
@@ -76,7 +76,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               Why Choose Himedi?
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -90,7 +90,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3 font-[family-name:var(--font-heading)]">Your Time</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3 font-heading">Your Time</h3>
               <p className="text-muted leading-relaxed">
                 Skip the long wait times. Access Korea&apos;s best preventive health screenings without the months-long queues common in many countries.
               </p>
@@ -101,7 +101,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3 font-[family-name:var(--font-heading)]">Your Support</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3 font-heading">Your Support</h3>
               <p className="text-muted leading-relaxed">
                 Our certified medical interpreters and concierge team are with you every step of the way, from scheduling to results delivery. 100+ interpreters available.
               </p>
@@ -112,7 +112,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3 font-[family-name:var(--font-heading)]">Your Peace of Mind</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-3 font-heading">Your Peace of Mind</h3>
               <p className="text-muted leading-relaxed">
                 Korean Government Certified medical tourism agency. Partner with Samsung Medical Center, SNUH, and KMI Gangnam for trusted, world-class care.
               </p>
@@ -124,7 +124,7 @@ export default function HomePage() {
       {/* The Himedi Experience */}
       <section className="py-16 md:py-20 bg-primary-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-heading">
             The Himedi Experience
           </h2>
           <p className="text-lg text-muted max-w-3xl mx-auto mb-8">
@@ -153,7 +153,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               How It Works
             </h2>
             <p className="text-muted text-lg max-w-2xl mx-auto">
@@ -171,10 +171,10 @@ export default function HomePage() {
                 {item.step < 4 && (
                   <div className="hidden md:block absolute top-8 left-[60%] w-[80%] border-t-2 border-dashed border-primary/20" />
                 )}
-                <div className="relative z-10 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 font-[family-name:var(--font-heading)]">
+                <div className="relative z-10 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 font-heading">
                   {item.step}
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2 font-[family-name:var(--font-heading)]">
+                <h3 className="text-lg font-semibold text-foreground mb-2 font-heading">
                   {item.title}
                 </h3>
                 <p className="text-sm text-muted leading-relaxed">{item.description}</p>
@@ -189,10 +189,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold text-foreground font-[family-name:var(--font-heading)]">Popular Packages</h2>
+              <h2 className="text-3xl font-bold text-foreground font-heading">Popular Packages</h2>
               <p className="text-muted mt-1">Our most requested health screening packages</p>
             </div>
-            <Link href="/collections/all" className="hidden sm:inline-flex items-center gap-1 text-primary font-medium hover:text-primary-dark transition-colors font-[family-name:var(--font-heading)]">
+            <Link href="/collections/all" className="hidden sm:inline-flex items-center gap-1 text-primary font-medium hover:text-primary-dark transition-colors font-heading">
               View All
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             </Link>
@@ -203,7 +203,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-1 mb-2">
                   <StarRating rating={product.averageRating} count={product.reviewsCount} size="sm" />
                 </div>
-                <h3 className="font-semibold text-foreground text-lg mb-2 font-[family-name:var(--font-heading)]">{product.title}</h3>
+                <h3 className="font-semibold text-foreground text-lg mb-2 font-heading">{product.title}</h3>
                 <p className="text-sm text-muted mb-3 line-clamp-2">{product.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold text-primary">${product.price.toLocaleString()}</span>
@@ -219,7 +219,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               What Our Clients Say
             </h2>
             <p className="text-muted text-lg">Real experiences from real patients</p>
@@ -251,7 +251,7 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-muted-light">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
               Frequently Asked Questions
             </h2>
             <p className="text-muted text-lg">Quick answers to common questions</p>
@@ -262,7 +262,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="/faq" className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-dark transition-colors font-[family-name:var(--font-heading)]">
+            <Link href="/faq" className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-dark transition-colors font-heading">
               View All FAQs
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -277,7 +277,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-[family-name:var(--font-heading)]">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-heading">
                 Meet the Founders
               </h2>
               <p className="text-muted leading-relaxed mb-6">
@@ -289,7 +289,7 @@ export default function HomePage() {
               <p className="text-muted leading-relaxed mb-8">
                 As featured in Business of Fashion and Oprah Daily, Himedi has quickly become the trusted name in Korean medical tourism.
               </p>
-              <Link href="/about" className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-dark transition-colors font-[family-name:var(--font-heading)]">
+              <Link href="/about" className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-dark transition-colors font-heading">
                 Read Our Story
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -299,16 +299,16 @@ export default function HomePage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-primary-light to-blue-100 rounded-xl p-8 text-center">
                 <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-primary font-[family-name:var(--font-heading)]">DS</span>
+                  <span className="text-2xl font-bold text-primary font-heading">DS</span>
                 </div>
-                <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">Donkyo Seo</h3>
+                <h3 className="font-semibold text-foreground font-heading">Donkyo Seo</h3>
                 <p className="text-sm text-muted">CEO & Co-Founder</p>
               </div>
               <div className="bg-gradient-to-br from-secondary/10 to-green-50 rounded-xl p-8 text-center">
                 <div className="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-bold text-secondary font-[family-name:var(--font-heading)]">WB</span>
+                  <span className="text-2xl font-bold text-secondary font-heading">WB</span>
                 </div>
-                <h3 className="font-semibold text-foreground font-[family-name:var(--font-heading)]">William Ban</h3>
+                <h3 className="font-semibold text-foreground font-heading">William Ban</h3>
                 <p className="text-sm text-muted">COO & Co-Founder</p>
               </div>
             </div>
@@ -321,8 +321,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-muted mb-6 uppercase tracking-wider font-medium">As Featured In</p>
           <div className="flex items-center justify-center gap-12 md:gap-20">
-            <div className="text-muted/40 text-lg font-bold font-[family-name:var(--font-heading)]">Business of Fashion</div>
-            <div className="text-muted/40 text-lg font-bold font-[family-name:var(--font-heading)]">Oprah Daily</div>
+            <div className="text-muted/40 text-lg font-bold font-heading">Business of Fashion</div>
+            <div className="text-muted/40 text-lg font-bold font-heading">Oprah Daily</div>
           </div>
         </div>
       </section>
@@ -330,13 +330,13 @@ export default function HomePage() {
       {/* CTA */}
       <section className="py-16 md:py-24 bg-primary text-white text-center">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-[family-name:var(--font-heading)]">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
             Ready to Prioritize Your Health?
           </h2>
           <p className="text-blue-100 text-lg mb-8">
             Browse our health screening packages and book your Korean medical experience today. Full concierge support included at no extra cost.
           </p>
-          <Link href="/collections/all" className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-base font-[family-name:var(--font-heading)]">
+          <Link href="/collections/all" className="inline-flex items-center justify-center bg-white text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-gray-100 transition-colors text-base font-heading">
             Browse All Packages
           </Link>
         </div>

@@ -11,7 +11,7 @@ export function Footer() {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">H</span>
               </div>
-              <span className="text-xl font-bold font-[family-name:var(--font-heading)]">
+              <span className="text-xl font-bold font-heading">
                 Himedi
               </span>
             </div>
@@ -71,7 +71,7 @@ export function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 font-[family-name:var(--font-heading)]">
+            <h3 className="font-semibold text-lg mb-4 font-heading">
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -128,7 +128,7 @@ export function Footer() {
 
           {/* Column 3: Services */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 font-[family-name:var(--font-heading)]">
+            <h3 className="font-semibold text-lg mb-4 font-heading">
               Services
             </h3>
             <ul className="space-y-3">
@@ -177,7 +177,7 @@ export function Footer() {
 
           {/* Column 4: Legal */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 font-[family-name:var(--font-heading)]">
+            <h3 className="font-semibold text-lg mb-4 font-heading">
               Legal
             </h3>
             <ul className="space-y-3">

@@ -21,7 +21,7 @@ export function AccordionItem({
         className="w-full flex items-center justify-between p-5 text-left hover:bg-muted-light transition-colors"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium text-foreground pr-4 font-[family-name:var(--font-heading)]">
+        <span className="font-medium text-foreground pr-4 font-heading">
           {question}
         </span>
         <svg

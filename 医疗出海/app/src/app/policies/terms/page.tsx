@@ -11,7 +11,7 @@ export default function TermsPage() {
     <div className="bg-white">
       <div className="bg-gradient-to-r from-primary to-blue-700 text-white py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl md:text-4xl font-bold font-heading">
             Terms of Service
           </h1>
         </div>
@@ -20,7 +20,7 @@ export default function TermsPage() {
         <div className="prose max-w-none">
           <p className="text-muted mb-6">Last updated: April 20, 2026</p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             1. Acceptance of Terms
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -29,7 +29,7 @@ export default function TermsPage() {
             terms, please do not use our services.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             2. Service Description
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -40,7 +40,7 @@ export default function TermsPage() {
             provider and does not deliver medical services directly.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             3. Medical Disclaimer
           </h2>
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
@@ -54,7 +54,7 @@ export default function TermsPage() {
             </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             4. Pricing and Payment
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -64,7 +64,7 @@ export default function TermsPage() {
             cards, PayPal, Apple Pay, and Google Pay.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             5. Cancellation and Refunds
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -75,7 +75,7 @@ export default function TermsPage() {
             for detailed information about cancellations and refund eligibility.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             6. HIPAA and Health Data
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -85,7 +85,7 @@ export default function TermsPage() {
             applicable Korean and international health data regulations.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             7. Limitation of Liability
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -95,7 +95,7 @@ export default function TermsPage() {
             concierge and coordination services we provide.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             8. Changes to Terms
           </h2>
           <p className="text-muted leading-relaxed mb-4">
@@ -105,7 +105,7 @@ export default function TermsPage() {
             of the revised terms.
           </p>
 
-          <h2 className="text-2xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
             9. Contact
           </h2>
           <p className="text-muted leading-relaxed">

@@ -93,7 +93,7 @@ export default function CheckoutPage() {
     return (
       <div className="bg-white min-h-screen">
         <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+          <h1 className="text-3xl font-bold text-foreground mb-4 font-heading">
             Nothing to Checkout
           </h1>
           <p className="text-muted mb-6">
@@ -101,7 +101,7 @@ export default function CheckoutPage() {
           </p>
           <a
             href="/collections/all"
-            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)]"
+            className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors font-heading"
           >
             Browse Packages
           </a>
@@ -113,7 +113,7 @@ export default function CheckoutPage() {
   return (
     <div className="bg-muted-light min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-[family-name:var(--font-heading)]">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-heading">
           Checkout
         </h1>
 
@@ -129,7 +129,7 @@ export default function CheckoutPage() {
             <div className="lg:col-span-2 space-y-6">
               {/* Customer Information */}
               <div className="bg-white rounded-xl p-6 border border-border">
-                <h2 className="text-lg font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+                <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
                   Customer Information
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -223,7 +223,7 @@ export default function CheckoutPage() {
 
               {/* Payment Method */}
               <div className="bg-white rounded-xl p-6 border border-border">
-                <h2 className="text-lg font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+                <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
                   Payment Method
                 </h2>
                 <div className="space-y-3 mb-6">
@@ -279,7 +279,7 @@ export default function CheckoutPage() {
             {/* Right: Order Summary */}
             <div>
               <div className="bg-white rounded-xl p-6 border border-border sticky top-24">
-                <h2 className="text-lg font-bold text-foreground mb-4 font-[family-name:var(--font-heading)]">
+                <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
                   Order Summary
                 </h2>
                 <div className="space-y-3 mb-6">
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full bg-primary text-white font-semibold py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-[family-name:var(--font-heading)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-primary text-white font-semibold py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing
                     ? "Redirecting to payment..."
