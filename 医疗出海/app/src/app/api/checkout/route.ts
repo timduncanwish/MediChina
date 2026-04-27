@@ -4,7 +4,7 @@ import { stripe, formatAmountForStripe } from "@/lib/stripe";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { items, customerEmail, customerName, paymentMethod } = body;
+    const { items, customerEmail, customerName, customerPhone, customerNationality, paymentMethod } = body;
 
     if (!items || !items.length) {
       return NextResponse.json(
@@ -25,6 +25,12 @@ export async function POST(request: NextRequest) {
     const paymentMethodTypes: ("card" | "paypal")[] =
       paymentMethod === "paypal" ? ["card", "paypal"] : ["card"];
 
+    // Encode product IDs and quantities in metadata for webhook to link OrderItems to real Products
+    const productData = items.map(
+      (item: { productId: string; quantity: number }) =>
+        `${item.productId}:${item.quantity}`
+    ).join(",");
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: paymentMethodTypes,
       mode: "payment",
@@ -43,6 +49,9 @@ export async function POST(request: NextRequest) {
       ),
       metadata: {
         customerName: customerName || "",
+        customerPhone: customerPhone || "",
+        customerNationality: customerNationality || "",
+        productData,
       },
       success_url: `${origin}/booking-confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout?cancelled=true`,

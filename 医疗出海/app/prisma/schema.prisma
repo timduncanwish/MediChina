@@ -91,6 +91,7 @@ model Order {
   customerLastName    String
   customerPhone       String?
   status              String      @default("pending") // pending, confirmed, completed, cancelled
+  paymentStatus       String      @default("pending") // pending, paid, failed, refunded
   totalAmount         Float
   currency            String      @default("USD")
   appointmentDate     DateTime?

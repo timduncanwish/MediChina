@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useCart } from "@/components/CartProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const { items, totalPrice, clearCart } = useCart();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal">(
     "card"
   );
@@ -20,76 +21,59 @@ export default function CheckoutPage() {
     nationality: "",
   });
 
+  // Handle cancelled payment redirect from Stripe
+  useEffect(() => {
+    if (searchParams.get("cancelled") === "true") {
+      setError("Payment was cancelled. You can try again when ready.");
+    }
+  }, [searchParams]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsProcessing(true);
     setError(null);
 
+    const payload = {
+      items: items.map((item) => ({
+        productId: item.product.id,
+        title: item.product.title,
+        price: item.product.price,
+        quantity: item.quantity,
+      })),
+      customerEmail: formData.email,
+      customerName: `${formData.firstName} ${formData.lastName}`,
+      customerPhone: formData.phone,
+      customerNationality: formData.nationality,
+      paymentMethod: paymentMethod === "paypal" ? "paypal" : "card",
+    };
+
     try {
-      if (paymentMethod === "card") {
-        // Stripe Checkout
-        const res = await fetch("/api/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            items: items.map((item) => ({
-              title: item.product.title,
-              price: item.product.price,
-              quantity: item.quantity,
-            })),
-            customerEmail: formData.email,
-            customerName: `${formData.firstName} ${formData.lastName}`,
-          }),
-        });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (!res.ok) {
-          throw new Error(data.error || "Checkout failed");
-        }
+      if (!res.ok) {
+        throw new Error(data.error || "Checkout failed. Please try again.");
+      }
 
-        // Redirect to Stripe hosted checkout
-        if (data.url) {
-          clearCart();
-          window.location.href = data.url;
-          return;
-        }
-      } else {
-        // PayPal - same flow via Stripe with PayPal method
-        const res = await fetch("/api/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            items: items.map((item) => ({
-              title: item.product.title,
-              price: item.product.price,
-              quantity: item.quantity,
-            })),
-            customerEmail: formData.email,
-            customerName: `${formData.firstName} ${formData.lastName}`,
-            paymentMethod: "paypal",
-          }),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || "Checkout failed");
-        }
-
-        if (data.url) {
-          clearCart();
-          window.location.href = data.url;
-          return;
-        }
+      if (data.url) {
+        clearCart();
+        window.location.href = data.url;
+        return;
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
       setIsProcessing(false);
     }
   };
 
-  if (items.length === 0) {
+  if (items.length === 0 && searchParams.get("cancelled") !== "true") {
     return (
       <div className="bg-white min-h-screen">
         <div className="max-w-2xl mx-auto px-4 py-16 text-center">
@@ -118,8 +102,21 @@ export default function CheckoutPage() {
         </h1>
 
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm">
-            {error}
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm flex items-start gap-3">
+            <svg className="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <div>
+              <p>{error}</p>
+              {error.includes("cancelled") && (
+                <button
+                  onClick={() => setError(null)}
+                  className="text-red-600 underline text-xs mt-1"
+                >
+                  Dismiss
+                </button>
+              )}
+            </div>
           </div>
         )}
 
@@ -227,7 +224,7 @@ export default function CheckoutPage() {
                   Payment Method
                 </h2>
                 <div className="space-y-3 mb-6">
-                  <label className="flex items-center gap-3 p-4 border border-border rounded-lg cursor-pointer hover:bg-muted-light transition-colors">
+                  <label className={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted-light transition-colors ${paymentMethod === "card" ? "border-primary bg-primary/5" : "border-border"}`}>
                     <input
                       type="radio"
                       name="payment"
@@ -249,7 +246,7 @@ export default function CheckoutPage() {
                       Visa, Mastercard, AMEX
                     </span>
                   </label>
-                  <label className="flex items-center gap-3 p-4 border border-border rounded-lg cursor-pointer hover:bg-muted-light transition-colors">
+                  <label className={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted-light transition-colors ${paymentMethod === "paypal" ? "border-primary bg-primary/5" : "border-border"}`}>
                     <input
                       type="radio"
                       name="payment"
@@ -267,6 +264,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="bg-blue-50 rounded-lg p-4 text-center">
+                  <svg className="w-5 h-5 text-blue-500 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
                   <p className="text-sm text-muted">
                     {paymentMethod === "paypal"
                       ? "You will be redirected to PayPal to complete your purchase."
@@ -306,7 +306,7 @@ export default function CheckoutPage() {
 
                 <button
                   type="submit"
-                  disabled={isProcessing}
+                  disabled={isProcessing || items.length === 0}
                   className="w-full bg-primary text-white font-semibold py-3.5 rounded-lg hover:bg-primary-dark transition-colors font-heading disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing
@@ -332,5 +332,13 @@ export default function CheckoutPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="bg-white min-h-screen" />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
