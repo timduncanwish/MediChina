@@ -22,8 +22,15 @@ export async function POST(request: NextRequest) {
 
     const origin = request.headers.get("origin") || process.env.NEXTAUTH_URL || "http://localhost:3000";
 
-    const paymentMethodTypes: ("card" | "paypal")[] =
-      paymentMethod === "paypal" ? ["card", "paypal"] : ["card"];
+    // Map frontend payment method to Stripe payment_method_types
+    const methodMap: Record<string, string[]> = {
+      card: ["card"],
+      paypal: ["card", "paypal"],
+      alipay: ["card", "alipay"],
+      wechat_pay: ["wechat_pay"],
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const paymentMethodTypes = (methodMap[paymentMethod] || ["card"]) as any;
 
     // Encode product IDs and quantities in metadata for webhook to link OrderItems to real Products
     const productData = items.map(

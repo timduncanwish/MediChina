@@ -4,13 +4,88 @@ import { useState, useEffect, Suspense } from "react";
 import { useCart } from "@/components/CartProvider";
 import { useRouter, useSearchParams } from "next/navigation";
 
+type PaymentMethod = "card" | "paypal" | "alipay" | "wechat_pay" | "wise" | "crypto";
+
+const PAYMENT_OPTIONS: {
+  id: PaymentMethod;
+  name: string;
+  detail: string;
+  icon: React.ReactNode;
+  available: boolean;
+}[] = [
+  {
+    id: "card",
+    name: "Credit / Debit Card",
+    detail: "Visa, Mastercard, AMEX",
+    icon: (
+      <svg className="w-8 h-5 text-muted" viewBox="0 0 32 20" fill="currentColor">
+        <rect width="32" height="20" rx="3" />
+      </svg>
+    ),
+    available: true,
+  },
+  {
+    id: "paypal",
+    name: "PayPal",
+    detail: "",
+    icon: (
+      <div className="w-8 h-5 bg-[#003087] rounded flex items-center justify-center">
+        <span className="text-[#009cde] text-[8px] font-bold">PP</span>
+      </div>
+    ),
+    available: true,
+  },
+  {
+    id: "alipay",
+    name: "支付宝 Alipay",
+    detail: "",
+    icon: (
+      <div className="w-8 h-5 bg-[#1677FF] rounded flex items-center justify-center">
+        <span className="text-white text-[7px] font-bold">支</span>
+      </div>
+    ),
+    available: true,
+  },
+  {
+    id: "wechat_pay",
+    name: "微信支付 WeChat Pay",
+    detail: "",
+    icon: (
+      <div className="w-8 h-5 bg-[#07C160] rounded flex items-center justify-center">
+        <span className="text-white text-[7px] font-bold">微</span>
+      </div>
+    ),
+    available: true,
+  },
+  {
+    id: "wise",
+    name: "Wise",
+    detail: "International Transfer",
+    icon: (
+      <div className="w-8 h-5 bg-[#9FE870] rounded flex items-center justify-center">
+        <span className="text-[#163300] text-[7px] font-bold">W</span>
+      </div>
+    ),
+    available: false,
+  },
+  {
+    id: "crypto",
+    name: "Crypto (Creem)",
+    detail: "USDT, BTC, ETH",
+    icon: (
+      <div className="w-8 h-5 bg-[#F7931A] rounded flex items-center justify-center">
+        <span className="text-white text-[7px] font-bold">₿</span>
+      </div>
+    ),
+    available: false,
+  },
+];
+
 function CheckoutContent() {
   const { items, totalPrice, clearCart } = useCart();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal">(
-    "card"
-  );
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -30,6 +105,13 @@ function CheckoutContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const selected = PAYMENT_OPTIONS.find((o) => o.id === paymentMethod);
+    if (!selected?.available) {
+      setError(`${selected?.name || "This method"} is coming soon. Please choose another payment method.`);
+      return;
+    }
+
     setIsProcessing(true);
     setError(null);
 
@@ -44,7 +126,7 @@ function CheckoutContent() {
       customerName: `${formData.firstName} ${formData.lastName}`,
       customerPhone: formData.phone,
       customerNationality: formData.nationality,
-      paymentMethod: paymentMethod === "paypal" ? "paypal" : "card",
+      paymentMethod,
     };
 
     try {
@@ -223,44 +305,35 @@ function CheckoutContent() {
                 <h2 className="text-lg font-bold text-foreground mb-4 font-heading">
                   Payment Method
                 </h2>
-                <div className="space-y-3 mb-6">
-                  <label className={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted-light transition-colors ${paymentMethod === "card" ? "border-primary bg-primary/5" : "border-border"}`}>
-                    <input
-                      type="radio"
-                      name="payment"
-                      checked={paymentMethod === "card"}
-                      onChange={() => setPaymentMethod("card")}
-                      className="text-primary focus:ring-primary"
-                    />
-                    <svg
-                      className="w-8 h-5 text-muted"
-                      viewBox="0 0 32 20"
-                      fill="currentColor"
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                  {PAYMENT_OPTIONS.map((opt) => (
+                    <label
+                      key={opt.id}
+                      className={`relative flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted-light transition-colors ${paymentMethod === opt.id ? "border-primary bg-primary/5" : "border-border"} ${!opt.available ? "opacity-60" : ""}`}
                     >
-                      <rect width="32" height="20" rx="3" />
-                    </svg>
-                    <span className="text-sm font-medium text-foreground">
-                      Credit / Debit Card
-                    </span>
-                    <span className="ml-auto text-xs text-muted">
-                      Visa, Mastercard, AMEX
-                    </span>
-                  </label>
-                  <label className={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer hover:bg-muted-light transition-colors ${paymentMethod === "paypal" ? "border-primary bg-primary/5" : "border-border"}`}>
-                    <input
-                      type="radio"
-                      name="payment"
-                      checked={paymentMethod === "paypal"}
-                      onChange={() => setPaymentMethod("paypal")}
-                      className="text-primary focus:ring-primary"
-                    />
-                    <div className="w-8 h-5 bg-[#003087] rounded flex items-center justify-center">
-                      <span className="text-[#009cde] text-[8px] font-bold">PP</span>
-                    </div>
-                    <span className="text-sm font-medium text-foreground">
-                      PayPal
-                    </span>
-                  </label>
+                      <input
+                        type="radio"
+                        name="payment"
+                        checked={paymentMethod === opt.id}
+                        onChange={() => setPaymentMethod(opt.id)}
+                        className="text-primary focus:ring-primary"
+                      />
+                      {opt.icon}
+                      <div className="min-w-0 flex-1">
+                        <span className="text-sm font-medium text-foreground block truncate">
+                          {opt.name}
+                        </span>
+                        {opt.detail && (
+                          <span className="text-xs text-muted">{opt.detail}</span>
+                        )}
+                      </div>
+                      {!opt.available && (
+                        <span className="text-[10px] bg-muted/20 text-muted px-1.5 py-0.5 rounded font-medium shrink-0">
+                          Soon
+                        </span>
+                      )}
+                    </label>
+                  ))}
                 </div>
 
                 <div className="bg-blue-50 rounded-lg p-4 text-center">
@@ -268,9 +341,13 @@ function CheckoutContent() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                   <p className="text-sm text-muted">
-                    {paymentMethod === "paypal"
-                      ? "You will be redirected to PayPal to complete your purchase."
-                      : "You will be redirected to our secure payment page powered by Stripe."}
+                    {paymentMethod === "alipay"
+                      ? "You will be redirected to Alipay to complete your purchase."
+                      : paymentMethod === "wechat_pay"
+                        ? "You will scan a QR code with WeChat to complete payment."
+                        : paymentMethod === "paypal"
+                          ? "You will be redirected to PayPal to complete your purchase."
+                          : "You will be redirected to our secure payment page powered by Stripe."}
                   </p>
                 </div>
               </div>
