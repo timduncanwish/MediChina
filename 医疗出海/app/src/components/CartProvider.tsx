@@ -1,28 +1,40 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, ReactNode, useEffect } from "react";
+import { createContext, useContext, useCallback, useMemo, useSyncExternalStore, ReactNode } from "react";
 import { Product, CartItem } from "@/types";
 import { analytics } from "@/components/Analytics";
 
 const CART_STORAGE_KEY = "himedi_cart";
+const CART_CHANGE_EVENT = "himedi-cart-change";
 
-function loadCartFromStorage(): CartItem[] {
-  if (typeof window === "undefined") return [];
+function readCartJson(): string {
   try {
-    const stored = localStorage.getItem(CART_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    return localStorage.getItem(CART_STORAGE_KEY) || "[]";
   } catch {
-    return [];
+    return "[]";
   }
 }
 
-function saveCartToStorage(items: CartItem[]) {
-  if (typeof window === "undefined") return;
+function writeCart(items: CartItem[]) {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   } catch {
     // localStorage might be full or unavailable
   }
+  window.dispatchEvent(new Event(CART_CHANGE_EVENT));
+}
+
+function subscribeToCart(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(CART_CHANGE_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(CART_CHANGE_EVENT, callback);
+  };
+}
+
+function getServerSnapshot(): string {
+  return "[]";
 }
 
 interface CartContextType {
@@ -38,55 +50,49 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
-
-  // Hydrate from localStorage on mount
-  useEffect(() => {
-    setItems(loadCartFromStorage());
-    setHydrated(true);
-  }, []);
-
-  // Persist to localStorage on change
-  useEffect(() => {
-    if (hydrated) {
-      saveCartToStorage(items);
+  const cartJson = useSyncExternalStore(subscribeToCart, readCartJson, getServerSnapshot);
+  const items: CartItem[] = useMemo(() => {
+    try {
+      return JSON.parse(cartJson);
+    } catch {
+      return [];
     }
-  }, [items, hydrated]);
+  }, [cartJson]);
 
   const addItem = useCallback((product: Product, quantity = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
+    const current: CartItem[] = JSON.parse(readCartJson());
+    const existing = current.find((item) => item.product.id === product.id);
+    const updated = existing
+      ? current.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
-        );
-      }
-      return [...prev, { product, quantity }];
-    });
+        )
+      : [...current, { product, quantity }];
+    writeCart(updated);
     analytics.addToCart({ id: product.id, title: product.title, price: product.price, quantity });
   }, []);
 
   const removeItem = useCallback((productId: string) => {
-    setItems((prev) => prev.filter((item) => item.product.id !== productId));
+    const current: CartItem[] = JSON.parse(readCartJson());
+    writeCart(current.filter((item) => item.product.id !== productId));
   }, []);
 
   const updateQuantity = useCallback((productId: string, quantity: number) => {
+    const current: CartItem[] = JSON.parse(readCartJson());
     if (quantity <= 0) {
-      setItems((prev) => prev.filter((item) => item.product.id !== productId));
+      writeCart(current.filter((item) => item.product.id !== productId));
       return;
     }
-    setItems((prev) =>
-      prev.map((item) =>
+    writeCart(
+      current.map((item) =>
         item.product.id === productId ? { ...item, quantity } : item
       )
     );
   }, []);
 
   const clearCart = useCallback(() => {
-    setItems([]);
+    writeCart([]);
   }, []);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
