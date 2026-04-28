@@ -29,7 +29,7 @@ export async function sendBookingConfirmation(params: {
     )
     .join("");
 
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: params.to,
     subject: `Booking Confirmed - ${params.orderNumber}`,
@@ -90,7 +90,7 @@ export async function sendContactNotification(params: {
   serviceInterest?: string;
   notes?: string;
 }): Promise<EmailResult> {
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: ADMIN_EMAIL,
     subject: `New Inquiry from ${params.fullName}`,
@@ -117,7 +117,7 @@ export async function sendContactAutoReply(params: {
   to: string;
   fullName: string;
 }): Promise<EmailResult> {
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: params.to,
     subject: "We received your inquiry - Himedi",

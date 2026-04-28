@@ -1,30 +1,43 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 
 const CONSENT_KEY = "himedi_cookie_consent";
 
-export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+function subscribeToConsent(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
 
-  useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      setVisible(true);
-    }
-  }, []);
+function getConsentSnapshot(): string | null {
+  try {
+    return localStorage.getItem(CONSENT_KEY);
+  } catch {
+    return "declined";
+  }
+}
+
+function getServerConsentSnapshot(): string | null {
+  return "server";
+}
+
+export function CookieConsent() {
+  const consentValue = useSyncExternalStore(subscribeToConsent, getConsentSnapshot, getServerConsentSnapshot);
+  const [dismissed, setDismissed] = useState(false);
+
+  const visible = consentValue === null && !dismissed;
 
   const accept = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({ analytics: true, timestamp: Date.now() }));
-    setVisible(false);
+    setDismissed(true);
     // Reload to activate analytics scripts
     window.location.reload();
   };
 
   const decline = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({ analytics: false, timestamp: Date.now() }));
-    setVisible(false);
+    setDismissed(true);
   };
 
   if (!visible) return null;

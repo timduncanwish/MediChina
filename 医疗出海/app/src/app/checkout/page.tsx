@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useCart } from "@/components/CartProvider";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 type PaymentMethod = "card" | "paypal" | "alipay" | "wechat_pay" | "wise" | "crypto";
 
@@ -83,11 +83,14 @@ const PAYMENT_OPTIONS: {
 
 function CheckoutContent() {
   const { items, totalPrice, clearCart } = useCart();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    searchParams.get("cancelled") === "true"
+      ? "Payment was cancelled. You can try again when ready."
+      : null
+  );
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -95,13 +98,6 @@ function CheckoutContent() {
     phone: "",
     nationality: "",
   });
-
-  // Handle cancelled payment redirect from Stripe
-  useEffect(() => {
-    if (searchParams.get("cancelled") === "true") {
-      setError("Payment was cancelled. You can try again when ready.");
-    }
-  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

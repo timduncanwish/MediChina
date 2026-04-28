@@ -25,15 +25,13 @@ function BookingConfirmationContent() {
   const sessionId = searchParams.get("session_id");
 
   const [order, setOrder] = useState<OrderData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(!!sessionId);
+  const [error, setError] = useState<string | null>(
+    sessionId ? null : "No session found."
+  );
 
   useEffect(() => {
-    if (!sessionId) {
-      setError("No session found.");
-      setLoading(false);
-      return;
-    }
+    if (!sessionId) return;
 
     fetch(`/api/order?session_id=${sessionId}`)
       .then(async (res) => {
