@@ -1,6 +1,7 @@
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+import bcrypt from "bcrypt";
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -300,6 +301,26 @@ async function main() {
   }
 
   console.log(`Seeded ${products.length} products.`);
+
+  // Create admin user (skip if exists)
+  const adminEmail = "admin@himedi.com";
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash("admin123", 10);
+    await prisma.user.create({
+      data: {
+        email: adminEmail,
+        name: "Admin",
+        password: hashedPassword,
+        role: "admin",
+      },
+    });
+    console.log("Created admin user: admin@himedi.com / admin123");
+  } else {
+    console.log("Admin user already exists.");
+  }
 }
 
 main()

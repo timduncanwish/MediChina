@@ -1,36 +1,48 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { languages, getBlogPost, getBlogPosts, blogPosts } from "@/data/blog";
+import { languages } from "@/data/blog";
+import { getBlogPost, getBlogPosts, getBlogSlugs, getBlogLanguages } from "@/lib/blog";
 
 interface PageProps {
   params: Promise<{ lang: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return blogPosts
-    .filter((p) => p.published)
-    .map((p) => ({ lang: p.language, slug: p.slug }));
+  const dbLangs = await getBlogLanguages();
+  const allLangs = [...new Set([...languages.map((l) => l.code), ...dbLangs])];
+  const params: { lang: string; slug: string }[] = [];
+  for (const lang of allLangs) {
+    const slugs = await getBlogSlugs(lang);
+    for (const slug of slugs) {
+      params.push({ lang, slug });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { lang, slug } = await params;
-  const post = getBlogPost(slug, lang);
+  const post = await getBlogPost(slug, lang);
   if (!post) return { title: "Post Not Found" };
   return {
     title: post.title,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { lang, slug } = await params;
-  const post = getBlogPost(slug, lang);
+  const post = await getBlogPost(slug, lang);
   if (!post) notFound();
 
-  const relatedPosts = getBlogPosts(lang)
-    .filter((p) => p.id !== post.id)
-    .slice(0, 3);
+  const allPosts = await getBlogPosts(lang);
+  const relatedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
 
   return (
     <div className="bg-white min-h-screen">
@@ -53,7 +65,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full capitalize">
               {languages.find((l) => l.code === lang)?.label || lang}
             </span>
-            <time className="text-sm text-muted">{post.createdAt}</time>
+            <time className="text-sm text-muted">{new Date(post.createdAt).toLocaleDateString()}</time>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
             {post.title}

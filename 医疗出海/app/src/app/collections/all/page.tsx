@@ -1,9 +1,6 @@
 import { Metadata } from "next";
-import {
-  comprehensiveProducts,
-  focusedProducts,
-} from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
+import { getProductsByCategory } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "Shop All Packages",
@@ -11,7 +8,9 @@ export const metadata: Metadata = {
     "Browse our complete catalog of Korean health screening packages. From comprehensive full-body checkups to focused diagnostics.",
 };
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const comprehensiveProducts = await getProductsByCategory("comprehensive");
+  const focusedProducts = await getProductsByCategory("focused");
   return (
     <div className="bg-white">
       {/* Page header */}

@@ -1,14 +1,17 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { languages, getBlogPosts } from "@/data/blog";
+import { languages } from "@/data/blog";
+import { getBlogPosts, getBlogLanguages } from "@/lib/blog";
 
 interface PageProps {
   params: Promise<{ lang: string }>;
 }
 
 export async function generateStaticParams() {
-  return languages.map((l) => ({ lang: l.code }));
+  const dbLangs = await getBlogLanguages();
+  const allLangs = [...new Set([...languages.map((l) => l.code), ...dbLangs])];
+  return allLangs.map((code) => ({ lang: code }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -26,7 +29,7 @@ export default async function BlogListPage({ params }: PageProps) {
   const langInfo = languages.find((l) => l.code === lang);
   if (!langInfo) notFound();
 
-  const posts = getBlogPosts(lang);
+  const posts = await getBlogPosts(lang);
 
   return (
     <div className="bg-white min-h-screen">
@@ -90,7 +93,7 @@ export default async function BlogListPage({ params }: PageProps) {
                     <span className="text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full capitalize">
                       {post.language}
                     </span>
-                    <span className="text-xs text-muted">{post.createdAt}</span>
+                    <span className="text-xs text-muted">{new Date(post.createdAt).toLocaleDateString()}</span>
                   </div>
                   <h2 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors font-heading line-clamp-2">
                     {post.title}

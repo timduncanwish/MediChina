@@ -78,6 +78,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   const customerName = session.metadata?.customerName || "";
   const customerPhone = session.metadata?.customerPhone || "";
   const customerNationality = session.metadata?.customerNationality || "";
+  const userId = session.metadata?.userId || undefined;
   const productEntries = parseProductData(session.metadata?.productData);
 
   const orderNumber = `HM-${Date.now().toString(36).toUpperCase()}`;
@@ -123,6 +124,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
       status: "confirmed",
       paymentStatus: "paid",
       stripeSessionId: session.id,
+      userId,
       items: {
         create: orderItemsData,
       },
@@ -186,7 +188,7 @@ async function handleRefund(charge: Stripe.Charge) {
     await prisma.order.update({
       where: { id: order.id },
       data: {
-        paymentStatus: isFullRefund ? "refunded" : "paid",
+        paymentStatus: isFullRefund ? "refunded" : "partially_refunded",
         refundStatus: isFullRefund ? "full" : "partial",
       },
     });

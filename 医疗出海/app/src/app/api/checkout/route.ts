@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, formatAmountForStripe } from "@/lib/stripe";
+import { getServerSession } from "next-auth";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,6 +20,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Get authenticated user if available
+    const authSession = await getServerSession();
+    const userId = authSession?.user?.id as string | undefined;
 
     const origin = request.headers.get("origin") || process.env.NEXTAUTH_URL || "http://localhost:3000";
 
@@ -58,6 +63,7 @@ export async function POST(request: NextRequest) {
         customerName: customerName || "",
         customerPhone: customerPhone || "",
         customerNationality: customerNationality || "",
+        userId: userId || "",
         productData,
       },
       success_url: `${origin}/booking-confirmation?session_id={CHECKOUT_SESSION_ID}`,

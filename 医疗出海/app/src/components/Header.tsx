@@ -53,7 +53,12 @@ export function Header() {
             {/* Auth */}
             {session?.user ? (
               <div className="hidden md:flex items-center gap-3">
-                <span className="text-sm text-muted truncate max-w-[120px]">{session.user.email}</span>
+                <Link
+                  href="/account"
+                  className="text-sm font-medium text-muted hover:text-foreground transition-colors"
+                >
+                  My Account
+                </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="text-sm text-muted hover:text-foreground transition-colors"
@@ -155,12 +160,21 @@ export function Header() {
             ))}
             <hr className="border-border" />
             {session?.user ? (
-              <button
-                onClick={() => { signOut({ callbackUrl: "/" }); setMobileMenuOpen(false); }}
-                className="block text-base font-medium text-muted hover:text-foreground transition-colors py-2"
-              >
-                Sign out
-              </button>
+              <>
+                <Link
+                  href="/account"
+                  className="block text-base font-medium text-foreground hover:text-primary transition-colors py-2 font-heading"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  My Account
+                </Link>
+                <button
+                  onClick={() => { signOut({ callbackUrl: "/" }); setMobileMenuOpen(false); }}
+                  className="block text-base font-medium text-muted hover:text-foreground transition-colors py-2"
+                >
+                  Sign out
+                </button>
+              </>
             ) : (
               <Link
                 href="/login"

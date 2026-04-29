@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useCart } from "@/components/CartProvider";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type PaymentMethod = "card" | "paypal" | "alipay" | "wechat_pay" | "wise" | "crypto";
 
@@ -85,6 +86,7 @@ function CheckoutContent() {
   const { items, totalPrice, clearCart } = useCart();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: session } = useSession();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -95,6 +97,20 @@ function CheckoutContent() {
     phone: "",
     nationality: "",
   });
+
+  // Pre-fill form for logged-in users
+  useEffect(() => {
+    if (session?.user) {
+      const name = session.user.name || "";
+      const email = session.user.email || "";
+      setFormData((prev) => ({
+        ...prev,
+        email: prev.email || email,
+        firstName: prev.firstName || name.split(" ")[0],
+        lastName: prev.lastName || name.split(" ").slice(1).join(" "),
+      }));
+    }
+  }, [session]);
 
   // Handle cancelled payment redirect from Stripe
   useEffect(() => {

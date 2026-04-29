@@ -2,13 +2,15 @@ import Link from "next/link";
 import {
   testimonials,
   faqData,
-  comprehensiveProducts,
 } from "@/data/products";
 import { AccordionItem } from "@/components/Accordion";
 import { StarRating } from "@/components/StarRating";
 import { JsonLd, organizationJsonLd, faqJsonLd } from "@/components/JsonLd";
+import { getProductsByCategory } from "@/lib/products";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const comprehensiveProducts = await getProductsByCategory("comprehensive");
+
   const faqPreview = Object.values(faqData)
     .flat()
     .slice(0, 5);
