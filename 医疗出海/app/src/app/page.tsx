@@ -5,6 +5,7 @@ import {
 } from "@/data/products";
 import { Accordion } from "@/components/Accordion";
 import { StarRating } from "@/components/StarRating";
+import { TrustBadges, CertificationBadges } from "@/components/TrustBadges";
 import { JsonLd, organizationJsonLd, faqJsonLd } from "@/components/JsonLd";
 import { getProductsByCategory } from "@/lib/products";
 
@@ -63,6 +64,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Trust Badges — Media */}
+      <TrustBadges />
 
       {/* Stats Strip */}
       <section className="bg-foreground text-white py-10 md:py-14">
@@ -319,19 +323,7 @@ export default async function HomePage() {
                   </span>
                 ))}
               </div>
-              <div className="flex items-center gap-4 p-5 bg-white rounded-xl border border-border">
-                <div className="shrink-0">
-                  <div className="flex items-center gap-0.5 mb-1">
-                    <StarRating rating={5} size="sm" />
-                  </div>
-                  <p className="text-sm text-muted">78+ Reviews</p>
-                </div>
-                <div className="h-12 w-px bg-border" />
-                <div>
-                  <p className="text-sm font-medium text-foreground">As Featured In</p>
-                  <p className="text-sm text-muted">Business of Fashion, Oprah Daily</p>
-                </div>
-              </div>
+              <CertificationBadges />
             </div>
 
             {/* Right: FAQ */}

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { CertificationBadges, TrustBadges } from "@/components/TrustBadges";
 
 export const metadata: Metadata = {
   title: "About",
@@ -230,7 +231,66 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* Founder Story */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-sm font-semibold tracking-widest uppercase text-primary mb-3 font-heading">
+              Our Story
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground font-heading">
+              Why We Built Himedi
+            </h2>
+          </div>
+          <div className="space-y-6 text-muted leading-relaxed">
+            <p>
+              In 2022, our co-founder William found himself sitting in a Seoul hospital waiting room,
+              having just completed a comprehensive health screening that would have cost over $5,000
+              back home in the US. The total bill? Under $700. The technology was state-of-the-art.
+              The care was impeccable. The results arrived in English within days.
+            </p>
+            <p>
+              But getting there wasn&apos;t easy. He spent weeks researching hospitals, navigating
+              language barriers, and figuring out logistics. That&apos;s when he called Donkyo&mdash;a
+              close friend with deep roots in Korea&apos;s healthcare industry&mdash;and asked:
+              &ldquo;Why isn&apos;t there an easy way for people to access this?&rdquo;
+            </p>
+            <p>
+              Donkyo had seen this gap firsthand. International patients were flying to Korea in
+              growing numbers, but many arrived confused, underserved, and paying unnecessary
+              middleman fees. Together, they built Himedi to be the bridge they wished had existed:
+              a single platform where patients could browse curated packages, get matched with
+              top-tier hospitals, and receive full concierge support&mdash;at no extra cost.
+            </p>
+            <p>
+              Today, Himedi partners with Samsung Medical Center, Seoul National University Hospital,
+              and KMI Gangnam. We&apos;re Korean Government Certified and have helped patients from
+              over 50 countries take control of their health through world-class preventive screenings.
+            </p>
+          </div>
+          <div className="mt-10 flex items-center justify-center gap-4">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-sm text-muted font-heading">Donkyo Seo & William Ban, Co-Founders</span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+        </div>
+      </section>
+
+      {/* Media & Certifications */}
+      <TrustBadges />
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
+              Trusted & Certified
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto">
+              Your safety and privacy are our top priorities
+            </p>
+          </div>
+          <CertificationBadges />
+        </div>
+      </section>
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
