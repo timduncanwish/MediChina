@@ -1,25 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback, useId } from "react";
 
 interface AccordionItemProps {
   question: string;
   answer: string;
-  isOpen?: boolean;
+  isOpen: boolean;
+  onToggle: () => void;
+  buttonRef: (el: HTMLButtonElement | null) => void;
 }
 
-export function AccordionItem({
+function AccordionItem({
   question,
   answer,
-  isOpen: defaultOpen = false,
+  isOpen,
+  onToggle,
+  buttonRef,
 }: AccordionItemProps) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const headingId = useId();
+  const panelId = useId();
 
   return (
     <div className="border border-border rounded-lg overflow-hidden">
       <button
+        ref={buttonRef}
+        id={headingId}
         className="w-full flex items-center justify-between p-5 text-left hover:bg-muted-light transition-colors"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
       >
         <span className="font-medium text-foreground pr-4 font-heading">
           {question}
@@ -32,6 +41,7 @@ export function AccordionItem({
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={2}
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -40,9 +50,15 @@ export function AccordionItem({
           />
         </svg>
       </button>
-      {isOpen && (
-        <div className="px-5 pb-5 text-muted leading-relaxed">{answer}</div>
-      )}
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={headingId}
+        hidden={!isOpen}
+        className="px-5 pb-5 text-muted leading-relaxed"
+      >
+        {answer}
+      </div>
     </div>
   );
 }
@@ -52,14 +68,50 @@ interface AccordionProps {
 }
 
 export function Accordion({ items }: AccordionProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const focusButton = useCallback((index: number) => {
+    const clamped = Math.max(0, Math.min(index, items.length - 1));
+    buttonRefs.current[clamped]?.focus();
+  }, [items.length]);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent, index: number) => {
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          focusButton(index + 1);
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          focusButton(index - 1);
+          break;
+        case "Home":
+          e.preventDefault();
+          focusButton(0);
+          break;
+        case "End":
+          e.preventDefault();
+          focusButton(items.length - 1);
+          break;
+      }
+    },
+    [focusButton, items.length]
+  );
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" role="presentation">
       {items.map((item, index) => (
-        <AccordionItem
-          key={index}
-          question={item.question}
-          answer={item.answer}
-        />
+        <div key={index} onKeyDown={(e) => handleKeyDown(e, index)}>
+          <AccordionItem
+            question={item.question}
+            answer={item.answer}
+            isOpen={openIndex === index}
+            onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+            buttonRef={(el) => { buttonRefs.current[index] = el; }}
+          />
+        </div>
       ))}
     </div>
   );

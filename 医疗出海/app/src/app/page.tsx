@@ -3,7 +3,7 @@ import {
   testimonials,
   faqData,
 } from "@/data/products";
-import { AccordionItem } from "@/components/Accordion";
+import { Accordion } from "@/components/Accordion";
 import { StarRating } from "@/components/StarRating";
 import { JsonLd, organizationJsonLd, faqJsonLd } from "@/components/JsonLd";
 import { getProductsByCategory } from "@/lib/products";
@@ -339,11 +339,7 @@ export default async function HomePage() {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 font-heading">
                 Frequently Asked Questions
               </h2>
-              <div className="space-y-3">
-                {faqPreview.map((item, index) => (
-                  <AccordionItem key={index} question={item.question} answer={item.answer} />
-                ))}
-              </div>
+              <Accordion items={faqPreview} />
               <div className="mt-6">
                 <Link href="/faq" className="inline-flex items-center gap-2 text-primary font-medium hover:text-primary-dark transition-colors font-heading">
                   View All FAQs
