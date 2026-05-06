@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Product, Review } from "@/types";
 import { useCart } from "@/components/CartProvider";
 import { StarRating } from "@/components/StarRating";
+import { ReviewForm } from "./ReviewForm";
 
 interface Props {
   product: Product;
@@ -15,6 +16,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
   const { addItem } = useCart();
   const [addedToCart, setAddedToCart] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "reviews" | "schedule">("details");
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   const calendlyUrl = product.calendlyEventType || process.env.NEXT_PUBLIC_CALENDLY_LINK || "";
 
@@ -305,7 +307,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
           {/* Reviews Tab */}
           {activeTab === "reviews" && (
             <div className="max-w-3xl">
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center justify-between mb-8">
                 <div>
                   <p className="text-4xl font-bold text-foreground">
                     {product.averageRating.toFixed(1)}
@@ -315,7 +317,23 @@ export function ProductDetailClient({ product, reviews }: Props) {
                     Based on {product.reviewsCount} reviews
                   </p>
                 </div>
+                {!showReviewForm && (
+                  <button
+                    onClick={() => setShowReviewForm(true)}
+                    className="bg-primary text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors"
+                  >
+                    Write a Review
+                  </button>
+                )}
               </div>
+
+              {showReviewForm && (
+                <ReviewForm
+                  productId={product.id}
+                  onSuccess={() => setShowReviewForm(false)}
+                  onCancel={() => setShowReviewForm(false)}
+                />
+              )}
 
               <div className="space-y-6">
                 {reviews.length > 0 ? (

@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { mockReviews } from "@/data/products";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { JsonLd, productJsonLd } from "@/components/JsonLd";
 import { getProductByHandle, getProductHandles } from "@/lib/products";
+import { prisma } from "@/lib/prisma";
 
 interface PageProps {
   params: Promise<{ handle: string }>;
@@ -38,16 +38,26 @@ export default async function ProductPage({ params }: PageProps) {
     notFound();
   }
 
-  const reviews = mockReviews.filter((r) => r.productId === product.id);
-  const additionalReviews = mockReviews
-    .filter((r) => r.productId !== product.id)
-    .slice(0, 3);
-  const allReviews = [...reviews, ...additionalReviews];
+  const dbReviews = await prisma.review.findMany({
+    where: { productId: product.id, verified: true },
+    orderBy: { createdAt: "desc" },
+  });
+
+  const reviews = dbReviews.map((r) => ({
+    id: r.id,
+    productId: r.productId,
+    rating: r.rating,
+    title: r.title,
+    body: r.body,
+    author: r.author,
+    verified: r.verified,
+    createdAt: r.createdAt.toISOString().split("T")[0],
+  }));
 
   return (
     <>
       <JsonLd data={productJsonLd(product)} />
-      <ProductDetailClient product={product} reviews={allReviews} />
+      <ProductDetailClient product={product} reviews={reviews} />
     </>
   );
 }
