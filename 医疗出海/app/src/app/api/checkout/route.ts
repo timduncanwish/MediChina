@@ -1,22 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, formatAmountForStripe } from "@/lib/stripe";
 import { getServerSession } from "next-auth";
+import { rateLimit, getClientKey } from "@/lib/rate-limit";
+import { sanitizeText, isValidEmail } from "@/lib/validate";
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 checkout attempts per minute per IP
+  const rlKey = `checkout:${getClientKey(request)}`;
+  const rl = rateLimit(rlKey, { limit: 10, windowMs: 60_000 });
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   try {
     const body = await request.json();
-    const { items, customerEmail, customerName, customerPhone, customerNationality, paymentMethod } = body;
+    const { items, customerEmail, customerPhone, customerNationality, paymentMethod } = body;
+    const customerName = sanitizeText(String(body.customerName || ""));
+    const sanitizedEmail = sanitizeText(String(customerEmail || ""));
 
-    if (!items || !items.length) {
+    if (!items || !Array.isArray(items) || !items.length) {
       return NextResponse.json(
         { error: "Items are required." },
         { status: 400 }
       );
     }
 
-    if (!customerEmail) {
+    // Validate each item
+    for (const item of items) {
+      if (typeof item.price !== "number" || item.price <= 0 || item.price > 100000) {
+        return NextResponse.json(
+          { error: "Invalid item price." },
+          { status: 400 }
+        );
+      }
+      if (typeof item.quantity !== "number" || item.quantity < 1 || item.quantity > 10) {
+        return NextResponse.json(
+          { error: "Invalid item quantity." },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (!sanitizedEmail) {
       return NextResponse.json(
         { error: "Customer email is required." },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(sanitizedEmail)) {
+      return NextResponse.json(
+        { error: "Please provide a valid email address." },
         { status: 400 }
       );
     }
@@ -46,7 +83,7 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: paymentMethodTypes,
       mode: "payment",
-      customer_email: customerEmail,
+      customer_email: sanitizedEmail,
       line_items: items.map(
         (item: { title: string; price: number; quantity: number }) => ({
           price_data: {

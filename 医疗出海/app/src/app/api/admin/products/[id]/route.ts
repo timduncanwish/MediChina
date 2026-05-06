@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin-auth";
+import { sanitizeProductData } from "@/app/api/admin/products/route";
 
 export async function GET(
   _request: NextRequest,
@@ -28,10 +29,15 @@ export async function PUT(
 
   const { id } = await params;
   const body = await request.json();
+  const data = sanitizeProductData(body);
+
+  if (Object.keys(data).length === 0) {
+    return NextResponse.json({ error: "No valid fields to update." }, { status: 400 });
+  }
 
   const product = await prisma.product.update({
     where: { id },
-    data: body,
+    data: data as never,
   });
 
   return NextResponse.json(product);

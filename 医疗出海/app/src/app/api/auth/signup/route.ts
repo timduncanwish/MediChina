@@ -1,10 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { prisma } from "@/lib/prisma";
+import { rateLimit, getClientKey } from "@/lib/rate-limit";
+import { sanitizeText, isValidEmail } from "@/lib/validate";
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 5 signups per minute per IP
+  const rlKey = `signup:${getClientKey(request)}`;
+  const rl = rateLimit(rlKey, { limit: 5, windowMs: 60_000 });
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   try {
-    const { name, email, password, phone, nationality } = await request.json();
+    const body = await request.json();
+    const name = sanitizeText(String(body.name || ""));
+    const email = sanitizeText(String(body.email || ""));
+    const { password, phone, nationality } = body;
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -13,9 +28,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (password.length < 8) {
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Please provide a valid email address." },
+        { status: 400 }
+      );
+    }
+
+    if (typeof password !== "string" || password.length < 8) {
       return NextResponse.json(
         { error: "Password must be at least 8 characters." },
+        { status: 400 }
+      );
+    }
+
+    if (password.length > 128) {
+      return NextResponse.json(
+        { error: "Password is too long." },
         { status: 400 }
       );
     }
@@ -35,8 +64,8 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
-        phone: phone || null,
-        nationality: nationality || null,
+        phone: phone ? sanitizeText(String(phone)) : null,
+        nationality: nationality ? sanitizeText(String(nationality)) : null,
       },
     });
 
