@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -27,17 +27,27 @@ export default function AdminInquiriesPage() {
   const searchParams = useSearchParams();
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [loading, setLoading] = useState(true);
   const statusFilter = searchParams.get("status") || "all";
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
-    fetch(`/api/admin/inquiries?status=${statusFilter}&page=${page}`)
-      .then((r) => r.json())
-      .then((data) => { setInquiries(data.inquiries); setTotal(data.total); setLoading(false); })
-      .catch(() => setLoading(false));
+    try {
+      const r = await fetch(`/api/admin/inquiries?status=${statusFilter}&page=${page}`);
+      const data = await r.json();
+      setInquiries(data.inquiries);
+      setTotal(data.total);
+    } catch {
+      // keep existing data on error
+    } finally {
+      setLoading(false);
+    }
   }, [statusFilter, page]);
+
+  useEffect(() => {
+    startTransition(() => { fetchData(); });
+  }, [fetchData]);
 
   return (
     <div>

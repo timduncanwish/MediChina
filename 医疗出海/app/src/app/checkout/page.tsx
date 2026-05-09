@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useCallback, startTransition } from "react";
 import { useCart } from "@/components/CartProvider";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 type PaymentMethod = "card" | "paypal" | "alipay" | "wechat_pay" | "wise" | "crypto";
@@ -84,7 +84,6 @@ const PAYMENT_OPTIONS: {
 
 function CheckoutContent() {
   const { items, totalPrice, clearCart } = useCart();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
@@ -99,7 +98,7 @@ function CheckoutContent() {
   });
 
   // Pre-fill form for logged-in users
-  useEffect(() => {
+  const prefillForm = useCallback(() => {
     if (session?.user) {
       const name = session.user.name || "";
       const email = session.user.email || "";
@@ -112,10 +111,15 @@ function CheckoutContent() {
     }
   }, [session]);
 
+  useEffect(() => {
+    startTransition(() => { prefillForm(); });
+  }, [prefillForm]);
+
   // Handle cancelled payment redirect from Stripe
   useEffect(() => {
-    if (searchParams.get("cancelled") === "true") {
-      setError("Payment was cancelled. You can try again when ready.");
+    const cancelled = searchParams.get("cancelled");
+    if (cancelled === "true") {
+      startTransition(() => setError("Payment was cancelled. You can try again when ready."));
     }
   }, [searchParams]);
 

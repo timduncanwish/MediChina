@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import Link from "next/link";
 
 interface User {
@@ -12,16 +12,26 @@ interface User {
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
-    fetch(`/api/admin/users?page=${page}`)
-      .then((r) => r.json())
-      .then((data) => { setUsers(data.users); setTotal(data.total); setLoading(false); })
-      .catch(() => setLoading(false));
+    try {
+      const r = await fetch(`/api/admin/users?page=${page}`);
+      const data = await r.json();
+      setUsers(data.users);
+      setTotal(data.total);
+    } catch {
+      // keep existing data on error
+    } finally {
+      setLoading(false);
+    }
   }, [page]);
+
+  useEffect(() => {
+    startTransition(() => { fetchData(); });
+  }, [fetchData]);
 
   return (
     <div>

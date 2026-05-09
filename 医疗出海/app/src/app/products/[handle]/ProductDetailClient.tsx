@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Product, Review } from "@/types";
 import { useCart } from "@/components/CartProvider";
@@ -65,10 +66,12 @@ export function ProductDetailClient({ product, reviews }: Props) {
           {/* Left: Image */}
           <div className="bg-gradient-to-br from-primary-light to-blue-50 rounded-2xl aspect-square flex items-center justify-center overflow-hidden">
             {product.images[0] ? (
-              <img
+              <Image
                 src={product.images[0]}
                 alt={product.title}
                 className="w-full h-full object-contain"
+                width={800}
+                height={800}
               />
             ) : (
               <div className="text-center">

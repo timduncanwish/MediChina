@@ -14,19 +14,20 @@ export async function PUT(
 
   // Approve review and update product stats
   if (body.verified === true) {
-    const review = await prisma.review.update({
+    await prisma.review.update({
       where: { id },
       data: { verified: true },
     });
 
     // Recalculate product stats
-    await updateProductStats(review.productId);
-    return NextResponse.json(review);
+    const updated = await prisma.review.findUnique({ where: { id } });
+    if (updated) await updateProductStats(updated.productId);
+    return NextResponse.json({ ok: true });
   }
 
   // Reject / delete
   if (body.action === "reject") {
-    const review = await prisma.review.delete({ where: { id } });
+    await prisma.review.delete({ where: { id } });
     return NextResponse.json({ ok: true });
   }
 

@@ -18,9 +18,21 @@ export interface Product {
   sortOrder: number;
 }
 
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  icon: string;
+  isActive: boolean;
+  sortOrder: number;
+}
+
 export interface CartItem {
   product: Product;
   quantity: number;
+  selectedAddOns: AddOn[];
 }
 
 export interface Review {

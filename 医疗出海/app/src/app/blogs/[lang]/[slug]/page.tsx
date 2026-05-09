@@ -2,23 +2,12 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { languages } from "@/data/blog";
-import { getBlogPost, getBlogPosts, getBlogSlugs, getBlogLanguages } from "@/lib/blog";
+import { getBlogPost, getBlogPosts } from "@/lib/blog";
+
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ lang: string; slug: string }>;
-}
-
-export async function generateStaticParams() {
-  const dbLangs = await getBlogLanguages();
-  const allLangs = [...new Set([...languages.map((l) => l.code), ...dbLangs])];
-  const params: { lang: string; slug: string }[] = [];
-  for (const lang of allLangs) {
-    const slugs = await getBlogSlugs(lang);
-    for (const slug of slugs) {
-      params.push({ lang, slug });
-    }
-  }
-  return params;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

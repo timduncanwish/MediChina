@@ -77,7 +77,6 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
   const customerEmail = session.customer_email || "";
   const customerName = session.metadata?.customerName || "";
   const customerPhone = session.metadata?.customerPhone || "";
-  const customerNationality = session.metadata?.customerNationality || "";
   const userId = session.metadata?.userId || undefined;
   const productEntries = parseProductData(session.metadata?.productData);
 

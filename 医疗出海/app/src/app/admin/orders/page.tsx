@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -35,13 +35,23 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true);
   const statusFilter = searchParams.get("status") || "all";
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
-    fetch(`/api/admin/orders?status=${statusFilter}&page=${page}`)
-      .then((r) => r.json())
-      .then((data) => { setOrders(data.orders); setTotal(data.total); setLoading(false); })
-      .catch(() => setLoading(false));
+    try {
+      const r = await fetch(`/api/admin/orders?status=${statusFilter}&page=${page}`);
+      const data = await r.json();
+      setOrders(data.orders);
+      setTotal(data.total);
+    } catch {
+      // keep existing data on error
+    } finally {
+      setLoading(false);
+    }
   }, [statusFilter, page]);
+
+  useEffect(() => {
+    startTransition(() => { fetchData(); });
+  }, [fetchData]);
 
   const pages = Math.ceil(total / 20);
 

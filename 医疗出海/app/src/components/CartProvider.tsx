@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, ReactNode, useEffect } from "react";
+import { createContext, useContext, useState, useCallback, ReactNode, useSyncExternalStore } from "react";
 import { Product, CartItem } from "@/types";
 import { analytics } from "@/components/Analytics";
 
@@ -38,21 +38,20 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
+    return loadCartFromStorage();
+  });
 
-  // Hydrate from localStorage on mount
-  useEffect(() => {
-    setItems(loadCartFromStorage());
-    setHydrated(true);
-  }, []);
-
-  // Persist to localStorage on change
-  useEffect(() => {
-    if (hydrated) {
-      saveCartToStorage(items);
-    }
-  }, [items, hydrated]);
+  // Persist to localStorage on change (skip initial hydration write)
+  const isClient = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+  if (isClient) {
+    saveCartToStorage(items);
+  }
 
   const addItem = useCallback((product: Product, quantity = 1) => {
     setItems((prev) => {

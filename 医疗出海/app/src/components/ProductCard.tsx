@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Product } from "@/types";
 
 interface ProductCardProps {
@@ -11,10 +12,12 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Image */}
       <div className="aspect-[4/3] bg-gradient-to-br from-primary-light to-blue-50 relative overflow-hidden">
         {product.images[0] ? (
-          <img
+          <Image
             src={product.images[0]}
             alt={product.title}
             className="w-full h-full object-contain"
+            width={400}
+            height={300}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">

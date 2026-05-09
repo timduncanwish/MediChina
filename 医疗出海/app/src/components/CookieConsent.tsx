@@ -1,30 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 
 const CONSENT_KEY = "himedi_cookie_consent";
 
-export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+function getConsentSnapshot() {
+  if (typeof window === "undefined") return "loading";
+  return localStorage.getItem(CONSENT_KEY) ?? "";
+}
 
-  useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      setVisible(true);
-    }
-  }, []);
+function getServerSnapshot() {
+  return "loading";
+}
+
+function subscribe() {
+  return () => {};
+}
+
+export function CookieConsent() {
+  const consent = useSyncExternalStore(subscribe, getConsentSnapshot, getServerSnapshot);
+  const visible = consent !== "loading" && consent === "";
 
   const accept = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({ analytics: true, timestamp: Date.now() }));
-    setVisible(false);
-    // Reload to activate analytics scripts
     window.location.reload();
   };
 
   const decline = () => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify({ analytics: false, timestamp: Date.now() }));
-    setVisible(false);
   };
 
   if (!visible) return null;

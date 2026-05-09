@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, startTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -30,8 +30,10 @@ function BookingConfirmationContent() {
 
   useEffect(() => {
     if (!sessionId) {
-      setError("No session found.");
-      setLoading(false);
+      startTransition(() => {
+        setError("No session found.");
+        setLoading(false);
+      });
       return;
     }
 

@@ -25,6 +25,7 @@ export async function GET(
   }
 
   // Don't expose password
-  const { password: _, ...safeUser } = user;
+  const { password: _password, ...safeUser } = user;
+  void _password;
   return NextResponse.json(safeUser);
 }

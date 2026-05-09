@@ -4,7 +4,7 @@ function getResend() {
   return new Resend(process.env.RESEND_API_KEY ?? "");
 }
 
-const FROM_EMAIL = "Himedi <noreply@himedi.com>";
+const FROM_EMAIL = process.env.FROM_EMAIL || "Himedi <onboarding@resend.dev>";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@himedi.com";
 
 interface EmailResult {
@@ -29,7 +29,7 @@ export async function sendBookingConfirmation(params: {
     )
     .join("");
 
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: params.to,
     subject: `Booking Confirmed - ${params.orderNumber}`,
@@ -90,7 +90,7 @@ export async function sendContactNotification(params: {
   serviceInterest?: string;
   notes?: string;
 }): Promise<EmailResult> {
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: ADMIN_EMAIL,
     subject: `New Inquiry from ${params.fullName}`,
@@ -117,7 +117,7 @@ export async function sendContactAutoReply(params: {
   to: string;
   fullName: string;
 }): Promise<EmailResult> {
-  const { data, error } = await getResend().emails.send({
+  const { error } = await getResend().emails.send({
     from: FROM_EMAIL,
     to: params.to,
     subject: "We received your inquiry - Himedi",

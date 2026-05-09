@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "@/components/CartProvider";
 
 export default function CartPage() {
@@ -53,10 +54,12 @@ export default function CartPage() {
                   {/* Product image */}
                   <div className="w-24 h-24 bg-gradient-to-br from-primary-light to-blue-50 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
                     {item.product.images?.[0] ? (
-                      <img
+                      <Image
                         src={item.product.images[0]}
                         alt={item.product.title}
                         className="w-full h-full object-contain"
+                        width={96}
+                        height={96}
                       />
                     ) : (
                       <svg
