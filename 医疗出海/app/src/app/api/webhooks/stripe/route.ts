@@ -56,14 +56,20 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ received: true });
 }
 
-/** Parse "productId:quantity,productId:quantity" from metadata */
+/** Parse "productId:quantity:addOnsJson,..." from metadata */
 function parseProductData(
   productData: string | undefined
-): { productId: string; quantity: number }[] {
+): { productId: string; quantity: number; addOns?: { id: string; name: string; price: number }[] }[] {
   if (!productData) return [];
   return productData.split(",").map((entry) => {
-    const [productId, qty] = entry.split(":");
-    return { productId, quantity: parseInt(qty, 10) || 1 };
+    const parts = entry.split(":");
+    const productId = parts[0];
+    const quantity = parseInt(parts[1], 10) || 1;
+    let addOns;
+    if (parts[2]) {
+      try { addOns = JSON.parse(decodeURIComponent(parts[2])); } catch { /* ignore */ }
+    }
+    return { productId, quantity, addOns };
   });
 }
 
@@ -89,11 +95,13 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
           const product = await prisma.product.findUnique({
             where: { id: entry.productId },
           });
+          const addOnTotal = entry.addOns?.reduce((s: number, a: { price: number }) => s + a.price, 0) || 0;
           return {
             productId: entry.productId,
             title: product?.title || "Health Screening Package",
-            price: product?.price || 0,
+            price: (product?.price || 0) + addOnTotal,
             quantity: entry.quantity,
+            addOns: entry.addOns ?? undefined,
           };
         })
       )

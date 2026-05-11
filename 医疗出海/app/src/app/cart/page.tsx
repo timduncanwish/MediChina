@@ -90,8 +90,20 @@ export default function CartPage() {
                       {item.product.partnerHospital}
                     </p>
                     <p className="text-primary font-bold mt-1">
-                      ${item.product.price.toLocaleString()}
+                      ${((item.product.price + (item.selectedAddOns ?? []).reduce((s, a) => s + a.price, 0)) * item.quantity).toLocaleString()}
                     </p>
+                    {item.selectedAddOns && item.selectedAddOns.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {item.selectedAddOns.map((addOn) => (
+                          <span
+                            key={addOn.id}
+                            className="inline-flex items-center gap-1 text-xs bg-primary-light text-primary px-2 py-0.5 rounded-full"
+                          >
+                            {addOn.icon} {addOn.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Quantity and remove */}

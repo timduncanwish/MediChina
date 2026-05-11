@@ -3,10 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Product, Review } from "@/types";
+import { Product, Review, AddOn } from "@/types";
 import { useCart } from "@/components/CartProvider";
 import { StarRating } from "@/components/StarRating";
 import { ReviewForm } from "./ReviewForm";
+import { AddOnSelector } from "@/components/AddOnSelector";
 
 interface Props {
   product: Product;
@@ -18,6 +19,8 @@ export function ProductDetailClient({ product, reviews }: Props) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "reviews" | "schedule">("details");
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [addOns, setAddOns] = useState<AddOn[]>([]);
+  const [selectedAddOnIds, setSelectedAddOnIds] = useState<string[]>([]);
 
   const calendlyUrl = product.calendlyEventType || process.env.NEXT_PUBLIC_CALENDLY_LINK || "";
 
@@ -34,8 +37,24 @@ export function ProductDetailClient({ product, reviews }: Props) {
     }
   }, [activeTab, calendlyUrl]);
 
+  useEffect(() => {
+    fetch("/api/addons")
+      .then((r) => r.json())
+      .then((d) => setAddOns(d.addOns ?? []))
+      .catch(() => {});
+  }, []);
+
+  const toggleAddOn = (id: string) => {
+    setSelectedAddOnIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const selectedAddOns = addOns.filter((a) => selectedAddOnIds.includes(a.id));
+  const addOnTotal = selectedAddOns.reduce((s, a) => s + a.price, 0);
+
   const handleAddToCart = () => {
-    addItem(product);
+    addItem(product, 1, selectedAddOns);
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
   };
@@ -117,7 +136,7 @@ export function ProductDetailClient({ product, reviews }: Props) {
 
             <div className="flex items-baseline gap-3 mb-6">
               <span className="text-4xl font-bold text-primary">
-                ${product.price.toLocaleString()}
+                ${(product.price + addOnTotal).toLocaleString()}
               </span>
               <span className="text-muted">USD</span>
               {product.compareAtPrice && (
@@ -125,11 +144,26 @@ export function ProductDetailClient({ product, reviews }: Props) {
                   ${product.compareAtPrice.toLocaleString()}
                 </span>
               )}
+              {addOnTotal > 0 && (
+                <span className="text-sm text-muted">
+                  (${product.price.toLocaleString()} + ${addOnTotal.toLocaleString()} add-ons)
+                </span>
+              )}
             </div>
 
             <p className="text-muted leading-relaxed mb-6">
               {product.description}
             </p>
+
+            {addOns.length > 0 && (
+              <div className="mb-6">
+                <AddOnSelector
+                  addOns={addOns}
+                  selectedIds={selectedAddOnIds}
+                  onToggle={toggleAddOn}
+                />
+              </div>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
               <button

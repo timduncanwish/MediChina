@@ -74,10 +74,10 @@ export async function POST(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const paymentMethodTypes = (methodMap[paymentMethod] || ["card"]) as any;
 
-    // Encode product IDs and quantities in metadata for webhook to link OrderItems to real Products
+    // Encode product IDs, quantities, and add-ons in metadata for webhook
     const productData = items.map(
-      (item: { productId: string; quantity: number }) =>
-        `${item.productId}:${item.quantity}`
+      (item: { productId: string; quantity: number; addOns?: { id: string; name: string; price: number }[] }) =>
+        `${item.productId}:${item.quantity}:${item.addOns ? encodeURIComponent(JSON.stringify(item.addOns)) : ""}`
     ).join(",");
 
     const session = await stripe.checkout.sessions.create({

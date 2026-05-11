@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, ReactNode, useSyncExternalStore } from "react";
-import { Product, CartItem } from "@/types";
+import { Product, CartItem, AddOn } from "@/types";
 import { analytics } from "@/components/Analytics";
 
 const CART_STORAGE_KEY = "himedi_cart";
@@ -27,7 +27,7 @@ function saveCartToStorage(items: CartItem[]) {
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (product: Product, quantity?: number) => void;
+  addItem: (product: Product, quantity?: number, addOns?: AddOn[]) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -53,17 +53,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     saveCartToStorage(items);
   }
 
-  const addItem = useCallback((product: Product, quantity = 1) => {
+  const addItem = useCallback((product: Product, quantity = 1, addOns: AddOn[] = []) => {
     setItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
+      const key = product.id + (addOns.length ? "|" + addOns.map(a => a.id).sort().join(",") : "");
+      const existing = prev.find((item) => {
+        const eKey = item.product.id + (item.selectedAddOns?.length ? "|" + item.selectedAddOns.map(a => a.id).sort().join(",") : "");
+        return eKey === key;
+      });
       if (existing) {
         return prev.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+          item === existing ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity, selectedAddOns: addOns }];
     });
     analytics.addToCart({ id: product.id, title: product.title, price: product.price, quantity });
   }, []);
@@ -90,7 +92,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) => {
+      const addOnTotal = (item.selectedAddOns ?? []).reduce((s, a) => s + a.price, 0);
+      return sum + (item.product.price + addOnTotal) * item.quantity;
+    },
     0
   );
 

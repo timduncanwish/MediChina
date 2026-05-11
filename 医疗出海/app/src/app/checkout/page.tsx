@@ -139,8 +139,9 @@ function CheckoutContent() {
       items: items.map((item) => ({
         productId: item.product.id,
         title: item.product.title,
-        price: item.product.price,
+        price: item.product.price + (item.selectedAddOns ?? []).reduce((s, a) => s + a.price, 0),
         quantity: item.quantity,
+        addOns: item.selectedAddOns?.map((a) => ({ id: a.id, name: a.name, price: a.price })) ?? [],
       })),
       customerEmail: formData.email,
       customerName: `${formData.firstName} ${formData.lastName}`,
@@ -380,19 +381,28 @@ function CheckoutContent() {
                   Order Summary
                 </h2>
                 <div className="space-y-3 mb-6">
-                  {items.map((item) => (
-                    <div
-                      key={item.product.id}
-                      className="flex justify-between text-sm"
-                    >
-                      <span className="text-muted">
-                        {item.product.title} x{item.quantity}
-                      </span>
-                      <span className="text-foreground font-medium">
-                        ${(item.product.price * item.quantity).toLocaleString()}
-                      </span>
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const addOnTotal = (item.selectedAddOns ?? []).reduce((s, a) => s + a.price, 0);
+                    const itemTotal = (item.product.price + addOnTotal) * item.quantity;
+                    return (
+                      <div key={item.product.id}>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-muted">
+                            {item.product.title} x{item.quantity}
+                          </span>
+                          <span className="text-foreground font-medium">
+                            ${itemTotal.toLocaleString()}
+                          </span>
+                        </div>
+                        {item.selectedAddOns?.map((addOn) => (
+                          <div key={addOn.id} className="flex justify-between text-xs ml-4 text-muted">
+                            <span>{addOn.icon} {addOn.name}</span>
+                            <span>+${addOn.price.toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
                   <div className="border-t border-border pt-3 flex justify-between">
                     <span className="font-semibold text-foreground">Total</span>
                     <span className="text-xl font-bold text-primary">
